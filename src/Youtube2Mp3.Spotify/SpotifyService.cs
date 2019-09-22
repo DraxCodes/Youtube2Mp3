@@ -6,6 +6,7 @@ using SpotifyAPI.Web.Auth;
 using Youtube2Mp3.Core.Entities;
 using Youtube2Mp3.Core.Extensions;
 using Youtube2Mp3.Core.Services;
+using Youtube2Mp3.Spotify.Extensions;
 
 namespace Youtube2Mp3.Spotify
 {
@@ -23,13 +24,7 @@ namespace Youtube2Mp3.Spotify
 
         public async Task<SpotifyTrack[]> LoadPlaylistAsync(string url)
         {
-            var ids = url.GetUserAndPlaylistId();
-
-            string userId = ids[0];
-            string playlistId = ids[1];
-
-            var playlist = await _webApi.GetPlaylistAsync(playlistId);
-            if (playlist == null) { throw new Exception("Invalid playlist id. Playlist could not be found in Spotify's database."); }
+            var playlist = _webApi.GetPlaylistByUrl(url);
 
             SpotifyTrack[] tracks = new SpotifyTrack[playlist.Tracks.Total];
 

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using Youtube2Mp3.Core.Entities;
+using Youtube2Mp3.Core.Extensions;
 using Youtube2Mp3.Core.Services;
 
 namespace Youtube2Mp3.Spotify
@@ -20,22 +21,34 @@ namespace Youtube2Mp3.Spotify
             _auth.ClientSecret = clientSecret;
         }
 
-        public async Task<SpotifyTrack[]> LoadPlaylistAsync(string url, int count = 20)
+        public async Task<SpotifyTrack[]> LoadPlaylistAsync(string url)
         {
-            //https://open.spotify.com/user/{USERID}/playlist/{PLAYLISTID}?si=83igUVjWQUODOlikDxOkhQ
+            var ids = url.GetUserAndPlaylistId();
 
-            string userId = "";
-            string playlistId = "";
-            SpotifyTrack[] tracks = new SpotifyTrack[count];
+            string userId = ids[0];
+            string playlistId = ids[1];
 
-            var userPlaylists = await _webApi.GetUserPlaylistsAsync(userId, count);
-            var playlist = userPlaylists.Items.AsEnumerable();
+            var playlist = await _webApi.GetPlaylistAsync(playlistId);
+            if (playlist == null) { throw new Exception("Invalid playlist id. Playlist could not be found in Spotify's database."); }
 
-            var test = playlist.First(t => t.Id == playlistId);
+            SpotifyTrack[] tracks = new SpotifyTrack[playlist.Tracks.Total];
 
+            for (int i = 0; i < playlist.Tracks.Total; i++)
+            {
+                // if this takes quite a while to do, we might be better off using Johnny's models/entities.
+                var currentTrack = playlist.Tracks.Items[i].Track;
 
+                tracks[i] = new SpotifyTrack
+                {
+                    Title = currentTrack.Name,
+                    Album = currentTrack.Album.Name,
+                    Artists = currentTrack.Artists.Select(x => x.Name).ToArray(),
+                    DurationMs = (uint)currentTrack.DurationMs
+                };
+            }
+
+            return tracks;
         }
-
         private async Task<SpotifyWebAPI> InitializeWebApi()
         {
             var auth = new CredentialsAuth(_auth.ClientId, _auth.ClientSecret);

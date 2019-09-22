@@ -4,7 +4,7 @@ namespace Youtube2Mp3.Core.Extensions
 {
     public static class StringExtensions
     {
-        public static string[] GetUserAndPlaylistIdFromSpotifyUrl(this string url)
+        public static string[] GetUserAndPlaylistId(this string url)
         {
             string userId = string.Empty;
             string playlistId = string.Empty;

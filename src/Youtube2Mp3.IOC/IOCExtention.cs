@@ -8,7 +8,7 @@ namespace Youtube2Mp3.IOC
     public static class IOCExtention
     {
         public static IServiceCollection UseSpotify(this IServiceCollection services)
-            => services.AddSingleton<ISpotifyService, SpotifyService>();
+            => services.AddSingleton<ITrackRespository, SpotifyTrackRepository>();
 
         public static IServiceCollection UseYoutube(this IServiceCollection services)
             => throw new NotImplementedException();

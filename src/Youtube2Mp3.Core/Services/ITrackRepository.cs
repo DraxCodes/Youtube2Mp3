@@ -4,9 +4,8 @@ using Youtube2Mp3.Core.Entities;
 
 namespace Youtube2Mp3.Core.Services
 {
-    public interface ISpotifyService
+    public interface ITrackRespository
     {
-        Task Initialize(string clientId, string clientSecret);
-        IEnumerable<Track> LoadPlaylist(string url);
+        Task<IEnumerable<Track>> LoadPlaylistAsync(string url);
     }
 }

@@ -10,20 +10,21 @@ using Youtube2Mp3.Spotify.Extensions;
 
 namespace Youtube2Mp3.Spotify
 {
-    public class SpotifyService : ISpotifyService
+    public class SpotifyTrackRepository : ITrackRespository
     {
         private SpotifyWebAPI _webApi;
-        private SpotifyAuth _auth;
+        private SpotifyAuth _auth = new SpotifyAuth();
 
-        public async Task Initialize(string clientId, string clientSecret)
+        public SpotifyTrackRepository(string clientId, string clientSecret)
         {
-            _webApi = await InitializeWebApi();
             _auth.ClientId = clientId;
             _auth.ClientSecret = clientSecret;
         }
 
-        public IEnumerable<Track> LoadPlaylist(string url)
+        public async Task<IEnumerable<Track>> LoadPlaylistAsync(string url)
         {
+            _webApi = await InitializeWebApi();
+
             var playlist = _webApi.GetPlaylistByUrl(url);
             var result = new List<Track>();
 

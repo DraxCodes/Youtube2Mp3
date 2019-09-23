@@ -36,6 +36,7 @@ namespace Youtube2Mp3.Spotify
             {
                 result.Add(new Track {
                     Title = item.Track.Name,
+                    Authors = item.Track.Artists.Select(a => a.Name),
                     DurationMilliSeconds = (uint)item.Track.DurationMs
                 });
             });

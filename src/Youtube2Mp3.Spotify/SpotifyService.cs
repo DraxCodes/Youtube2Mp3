@@ -1,11 +1,11 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using Youtube2Mp3.Core.Entities;
-using Youtube2Mp3.Core.Extensions;
 using Youtube2Mp3.Core.Services;
+using Youtube2Mp3.Spotify.Entities;
 using Youtube2Mp3.Spotify.Extensions;
 
 namespace Youtube2Mp3.Spotify
@@ -22,28 +22,26 @@ namespace Youtube2Mp3.Spotify
             _auth.ClientSecret = clientSecret;
         }
 
-        public async Task<SpotifyTrack[]> LoadPlaylistAsync(string url)
+        public IEnumerable<Track> LoadPlaylist(string url)
         {
             var playlist = _webApi.GetPlaylistByUrl(url);
+            var result = new List<Track>();
 
-            SpotifyTrack[] tracks = new SpotifyTrack[playlist.Tracks.Total];
+            if (playlist is null) { return result; }
 
-            for (int i = 0; i < playlist.Tracks.Total; i++)
+            var playlistItems = playlist.Tracks.Items;
+
+            Parallel.ForEach(playlistItems, item =>
             {
-                // if this takes quite a while to do, we might be better off using Johnny's models/entities.
-                var currentTrack = playlist.Tracks.Items[i].Track;
+                result.Add(new Track {
+                    Title = item.Track.Name,
+                    DurationMilliSeconds = (uint)item.Track.DurationMs
+                });
+            });
 
-                tracks[i] = new SpotifyTrack
-                {
-                    Title = currentTrack.Name,
-                    Album = currentTrack.Album.Name,
-                    Artists = currentTrack.Artists.Select(x => x.Name).ToArray(),
-                    DurationMs = (uint)currentTrack.DurationMs
-                };
-            }
-
-            return tracks;
+            return result;
         }
+
         private async Task<SpotifyWebAPI> InitializeWebApi()
         {
             var auth = new CredentialsAuth(_auth.ClientId, _auth.ClientSecret);

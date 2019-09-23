@@ -1,40 +1,25 @@
 ﻿using SpotifyAPI.Web;
 using SpotifyAPI.Web.Models;
-using System;
+using System.Text.RegularExpressions;
 
 namespace Youtube2Mp3.Spotify.Extensions
 {
     public static class SpotifyClientExtensions
     {
+        private static Regex spotifyPlaylistIdPattern = new Regex(@"playlist[\/|:](.{22})", RegexOptions.Compiled);
+
         public static FullPlaylist GetPlaylistByUrl(this SpotifyWebAPI api, string url)
         {
-            string userId = string.Empty;
-            string playlistId = string.Empty;
+            var id = ParseSpotifyIdFromUrl(url);
+            if (id is null) { return null; }
 
-            if (url.StartsWith("https://open.spotify.com"))
-            {
-                var parts = url.Split('/', StringSplitOptions.RemoveEmptyEntries);
+            return api.GetPlaylist(id);
+        }
 
-                if (!url.Contains("/user/"))
-                {
-                    playlistId = parts[3];
-                }
-                else
-                {
-                    userId = parts[3];
-                    playlistId = parts[5].Split("?si=")[0];
-                }
-             
-            }
-
-            else if (url.StartsWith("spotify:user:"))
-            {
-                var parts = url.Split(':');
-                userId = parts[2];
-                playlistId = parts[4];
-            }
-
-            return api.GetPlaylist(playlistId);
+        public static string ParseSpotifyIdFromUrl(string url)
+        {
+            if (url is null || !spotifyPlaylistIdPattern.IsMatch(url)) { return null; }
+            return spotifyPlaylistIdPattern.Match(url).Groups[1].Value;
         }
     }
 }

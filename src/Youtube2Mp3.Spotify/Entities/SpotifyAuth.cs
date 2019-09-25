@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Youtube2Mp3.Core.Entities
+﻿namespace Youtube2Mp3.Spotify.Entities
 {
     public class SpotifyAuth
     {

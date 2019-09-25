@@ -10,3 +10,8 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration) src/Youtube2Mp3.sln
   displayName: 'dotnet build $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '**/*xUnitTests.csproj'
+    arguments: '--configuration $(buildConfiguration)'

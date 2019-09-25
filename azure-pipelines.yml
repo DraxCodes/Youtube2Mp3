@@ -13,5 +13,5 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: test
-    projects: '**/*xUnitTests.csproj'
+    projects: 'src/Youtube2Mp3.Tests/*Tests.csproj'
     arguments: '--configuration $(buildConfiguration)'

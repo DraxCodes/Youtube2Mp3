@@ -11,6 +11,10 @@
   </a>
 </p>
 
+<p align="center">
+<img src="https://img.shields.io/badge/Service%20Status-Implemented-green?logo=spotify" /> <img src="https://img.shields.io/badge/Service%20Status-In%20Progress-red?logo=youtube" /> <img src="https://img.shields.io/badge/UI%20Status-In%20Planning-red?logo=windows" /> <img src="https://img.shields.io/badge/UI%20Status-Future%20Feature-red?logo=linux" />
+</p>
+
 
 ##  :thinking: What is it?
 Youtube2Mp3 Allows you to take playlists from other sources like Spotify and feed them into Youtube to get either a playable stream or a download for each track as an MP3.

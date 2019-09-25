@@ -23,7 +23,7 @@ namespace Youtube2Mp3.Spotify
 
         public async Task<IEnumerable<Track>> LoadPlaylistAsync(string url)
         {
-            _webApi = await InitializeWebApi();
+            if (_webApi != null) { _webApi = await InitializeWebApi(); }
 
             var playlist = _webApi.GetPlaylistByUrl(url);
             var result = new List<Track>();

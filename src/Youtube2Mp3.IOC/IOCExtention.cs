@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
 using Youtube2Mp3.Core.Services;
 using Youtube2Mp3.Spotify;
+using Youtube2Mp3.Youtube;
 
 namespace Youtube2Mp3.IOC
 {
@@ -11,6 +11,7 @@ namespace Youtube2Mp3.IOC
             => services.AddSingleton<ITrackRespository, SpotifyTrackRepository>();
 
         public static IServiceCollection UseYoutube(this IServiceCollection services)
-            => throw new NotImplementedException();
+            => services.AddSingleton<IStreamRepository, YoutubeStreamRepository>()
+                       .AddSingleton<IDownloadService, YoutubeStreamRepository>();
     }
 }

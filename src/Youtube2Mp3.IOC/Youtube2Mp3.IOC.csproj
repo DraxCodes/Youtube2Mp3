@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Youtube2Mp3.Core\Youtube2Mp3.Core.csproj" />
     <ProjectReference Include="..\Youtube2Mp3.Spotify\Youtube2Mp3.Spotify.csproj" />
+    <ProjectReference Include="..\Youtube2Mp3.Youtube\Youtube2Mp3.Youtube.csproj" />
   </ItemGroup>
 
 </Project>

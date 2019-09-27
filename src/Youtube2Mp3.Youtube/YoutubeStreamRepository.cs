@@ -42,7 +42,7 @@ namespace Youtube2Mp3.Youtube
             var result = string.Empty;
             var trackResults = await SearchYoutubeAsync(track.Title);
 
-            var filteredSearchResult = FilterYoutubeResults(trackResults, track.Title, track.DurationMilliSeconds);
+            var filteredSearchResult = FilterYoutubeResults(trackResults, track.Title, track.Duration);
             
             result = filteredSearchResult.Id;
 
@@ -54,10 +54,10 @@ namespace Youtube2Mp3.Youtube
             return await _client.SearchVideosAsync(title);
         }
 
-        private Video FilterYoutubeResults(IReadOnlyList<Video> videos, string title, uint durationMs)
+        private Video FilterYoutubeResults(IReadOnlyList<Video> videos, string title, TimeSpan duration)
         {
             var titleResults = videos.Where(v => v.Title == title);
-            var durationResult = titleResults.FirstOrDefault(v => v.Duration.Milliseconds == durationMs);
+            var durationResult = titleResults.FirstOrDefault(v => v.Duration.TotalSeconds == duration.TotalSeconds);
 
             return durationResult;
         }

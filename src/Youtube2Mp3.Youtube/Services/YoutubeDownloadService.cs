@@ -20,7 +20,7 @@ namespace Youtube2Mp3.Youtube.Services
             _streamRepository = streamRepository;
         }
 
-        public async Task DownloadMedia(Track track, string filePath)
+        public async Task DownloadMediaAsync(Track track, string filePath)
         {
             var videoStream = await _streamRepository.GetStreamOfTrackAsync(track);
             var bytes = videoStream.ToArray();

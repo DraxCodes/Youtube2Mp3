@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="YoutubeExplode" Version="4.7.10"/>
+  </ItemGroup>
+
+    <ItemGroup>
+    <ProjectReference Include="..\Youtube2Mp3.Core\Youtube2Mp3.Core.csproj" />
+  </ItemGroup>
+</Project>

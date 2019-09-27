@@ -10,8 +10,9 @@ namespace Youtube2Mp3.ConsoleUi.IOC
     {
         public static IServiceProvider Services()
             => new ServiceCollection()
-            .AddSingleton<IUiService, UiService>()
+            .AddSingleton<YoutubeUI>()
             .UseSpotify()
+            .UseYoutube()
             .BuildServiceProvider();
     }
 }

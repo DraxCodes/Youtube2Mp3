@@ -1,17 +1,17 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Youtube2Mp3.ConsoleUi.IOC;
-using Youtube2Mp3.Core.Services;
+using Youtube2Mp3.ConsoleUi.Services;
 
 namespace Youtube2Mp3.ConsoleUi
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             var services = Setup.Services();
-            var ui = services.GetRequiredService<IUiService>();
-
-            ui.SendOutput("Currently a WIP");
+            var ytClient = services.GetRequiredService<YoutubeUI>();
+            await ytClient.Test();
         }
     }
 }

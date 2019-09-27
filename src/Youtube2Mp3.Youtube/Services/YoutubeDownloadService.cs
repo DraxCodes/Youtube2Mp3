@@ -19,7 +19,7 @@ namespace Youtube2Mp3.Youtube.Services
             var videoStream = await _streamRepository.GetStreamOfTrackAsync(track);
             var bytes = videoStream.ToArray();
 
-            File.WriteAllBytes($"{filePath}/{track.Title}.mp3", bytes);
+            File.WriteAllBytes($"{track.Title}.mp3", bytes);
         }
     }
 }

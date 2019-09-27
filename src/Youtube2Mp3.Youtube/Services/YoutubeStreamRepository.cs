@@ -36,7 +36,7 @@ namespace Youtube2Mp3.Youtube.Services
         private async Task<Video> SearchYoutubeAsync(Track track)
         {
             var videos = await _client.SearchVideosAsync(track.Title);
-            var filteredResult = VideoFilter.BestMatchSingle(videos, track.Title, track.Duration);
+            var filteredResult = VideoFilter.ByTitleSingle(videos, track.Title);
 
             return filteredResult;
         }

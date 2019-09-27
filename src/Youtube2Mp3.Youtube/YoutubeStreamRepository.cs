@@ -33,11 +33,11 @@ namespace Youtube2Mp3.Youtube
             return stream;
         }
 
-        public void DownloadMedia(Stream stream)
+        public void DownloadMedia(Stream stream, string filePath)
         {
             /*using (var progress = new ProgressBar())
             {
-                _client.DownloadMediaStreamAsync(stream, $"{fileName}.mp3", progress);
+                _client.DownloadMediaStreamAsync(stream, $"{filePath}/{fileName}.mp3", progress);
             }*/
             throw new NotImplementedException();
         }

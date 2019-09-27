@@ -4,6 +4,6 @@ namespace Youtube2Mp3.Core.Services
 {
     public interface IDownloadService
     {
-        void DownloadMedia(Stream stream);
+        void DownloadMedia(Stream stream, string filePath);
     }
 }

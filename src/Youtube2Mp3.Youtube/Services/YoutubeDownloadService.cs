@@ -12,21 +12,20 @@ namespace Youtube2Mp3.Youtube.Services
     public class YoutubeDownloadService : IDownloadService
     {
         private readonly YoutubeClient _client;
+        private readonly IStreamRepository _streamRepository;
 
-        public YoutubeDownloadService(YoutubeClient client)
+        public YoutubeDownloadService(YoutubeClient client, IStreamRepository streamRepository)
         {
             _client = client;
+            _streamRepository = streamRepository;
         }
 
         public async Task DownloadMedia(Track track, string filePath)
         {
-            var video = await SearchYoutubeAsync(track);
-            var trackId = Helper.GetVideoId(video);
+            var videoStream = await _streamRepository.GetStreamOfTrackAsync(track);
+            var bytes = videoStream.ToArray();
 
-            var streamInfoSet = await _client.GetVideoMediaStreamInfosAsync(trackId);
-            var audioStreamInfo = streamInfoSet.Audio.WithHighestBitrate();
-
-            await _client.DownloadMediaStreamAsync(audioStreamInfo, filePath);
+            File.WriteAllBytes($"{filePath}/{track.Title}.mp3", bytes);
         }
 
         private async Task<Video> SearchYoutubeAsync(Track track)

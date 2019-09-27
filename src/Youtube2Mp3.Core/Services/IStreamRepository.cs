@@ -6,6 +6,6 @@ namespace Youtube2Mp3.Core.Services
 {
     public interface IStreamRepository
     {
-        Task<Stream> GetStreamOfTrack(Track track);
+        Task<MemoryStream> GetStreamOfTrackAsync(Track track);
     }
 }

@@ -13,12 +13,9 @@ namespace Youtube2Mp3.Youtube.Services
     {
         private YoutubeClient _client;
 
-        public YoutubeStreamRepository()
+        public YoutubeStreamRepository(YoutubeClient client)
         {
-            if (_client == null)
-            {
-                _client = new YoutubeClient();
-            }
+            _client = client;
         }
 
         public async Task<Stream> GetStreamOfTrack(Track track)
@@ -28,9 +25,9 @@ namespace Youtube2Mp3.Youtube.Services
             var trackId = Helper.GetVideoId(video);
 
             var streamInfoSet = await _client.GetVideoMediaStreamInfosAsync(trackId);
-            var streamInfo = streamInfoSet.Audio.WithHighestBitrate();
+            var audioStreamInfo = streamInfoSet.Audio.WithHighestBitrate();
 
-            var mediaStream = await _client.GetMediaStreamAsync(streamInfo);
+            var mediaStream = await _client.GetMediaStreamAsync(audioStreamInfo);
             mediaStream.CopyTo(stream);
 
             return stream;

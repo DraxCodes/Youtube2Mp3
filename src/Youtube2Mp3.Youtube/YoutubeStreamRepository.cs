@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Youtube2Mp3.Core.Entities;
 using Youtube2Mp3.Core.Services;
 using YoutubeExplode;
+using YoutubeExplode.Models;
 using YoutubeExplode.Models.MediaStreams;
 
 namespace Youtube2Mp3.Youtube
 {
-    public class YoutubeStreamRepository : IStreamRepository, IDownloadService
+    public class YoutubeStreamRepository : IStreamRepository
     {
         private YoutubeClient _client;
 
@@ -23,8 +26,9 @@ namespace Youtube2Mp3.Youtube
         public async Task<Stream> GetStreamOfTrack(Track track)
         {
             var stream = new MemoryStream();
+            var trackId = await FetchYoutubeIdAsync(track);
 
-            var streamInfoSet = await _client.GetVideoMediaStreamInfosAsync("");
+            var streamInfoSet = await _client.GetVideoMediaStreamInfosAsync(trackId);
             var streamInfo = streamInfoSet.Audio.WithHighestBitrate();
 
             var mediaStream = await _client.GetMediaStreamAsync(streamInfo);
@@ -33,13 +37,29 @@ namespace Youtube2Mp3.Youtube
             return stream;
         }
 
-        public void DownloadMedia(Stream stream, string filePath)
+        private async Task<string> FetchYoutubeIdAsync(Track track)
         {
-            /*using (var progress = new ProgressBar())
-            {
-                _client.DownloadMediaStreamAsync(stream, $"{filePath}/{fileName}.mp3", progress);
-            }*/
-            throw new NotImplementedException();
+            var result = string.Empty;
+            var trackResults = await SearchYoutubeAsync(track.Title);
+
+            var filteredSearchResult = FilterYoutubeResults(trackResults, track.Title, track.DurationMilliSeconds);
+            
+            result = filteredSearchResult.Id;
+
+            return result;
+        }
+
+        private async Task<IReadOnlyList<Video>> SearchYoutubeAsync(string title)
+        {
+            return await _client.SearchVideosAsync(title);
+        }
+
+        private Video FilterYoutubeResults(IReadOnlyList<Video> videos, string title, uint durationMs)
+        {
+            var titleResults = videos.Where(v => v.Title == title);
+            var durationResult = titleResults.FirstOrDefault(v => v.Duration.Milliseconds == durationMs);
+
+            return durationResult;
         }
     }
 }

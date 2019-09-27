@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Youtube2Mp3.Core.Services;
 using Youtube2Mp3.Spotify;
-using Youtube2Mp3.Youtube;
+using Youtube2Mp3.Youtube.Services;
 
 namespace Youtube2Mp3.IOC
 {

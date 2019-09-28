@@ -9,14 +9,14 @@ namespace Youtube2Mp3.Core.Entities
         public IEnumerable<string> Authors { get; private set; }
         public TimeSpan Duration { get; private set; }
 
-        public Track(string title, IEnumerable<string> authors, uint durationMilliSeconds)
+        public Track(string title, IEnumerable<string> authors, int durationMilliSeconds)
         {
             Title = title;
             Authors = authors;
-            Duration = GeneratTimeSpan(durationMilliSeconds);
+            Duration = GenerateTimeSpan(durationMilliSeconds);
         }
 
-        private TimeSpan GeneratTimeSpan(uint durationMilliSeconds)
+        private TimeSpan GenerateTimeSpan(int durationMilliSeconds)
         {
             return TimeSpan.FromMilliseconds(durationMilliSeconds);
         }

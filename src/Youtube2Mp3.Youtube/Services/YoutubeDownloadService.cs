@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using Youtube2Mp3.Core.Entities;
@@ -20,6 +21,12 @@ namespace Youtube2Mp3.Youtube.Services
 
             var stream = await _streamRepository.GetStreamOfTrackAsync(track);
             var streamArray = stream.ToArray();
+
+            if (stream.Length < 1)
+            {
+                Console.WriteLine($"Track not found! {track.Title}");
+                return;
+            }
 
             File.WriteAllBytes($"{filePath}/{track.Title}.mp3", streamArray);
         }

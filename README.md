@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-<img src="https://img.shields.io/badge/UI%20Status-In%20Planning-red?logo=windows" /> <img src="https://img.shields.io/badge/UI%20Status-Future%20Feature-red?logo=linux" /> <img src="https://img.shields.io/badge/UI%20Status-In%20Planning-red?logo=android" /> <img src="https://img.shields.io/badge/UI%20Status-In%20Planning-red?logo=apple" />
+<img src="https://img.shields.io/badge/UI%20Status-In%20Planning-red?logo=windows" /> <img src="https://img.shields.io/badge/UI%20Status-Blocked%20By%20Bug-red?logo=linux" /> <img src="https://img.shields.io/badge/UI%20Status-In%20Planning-red?logo=android" /> <img src="https://img.shields.io/badge/UI%20Status-In%20Planning-red?logo=apple" />
 </p>
 <p align="center">
   <img src="https://img.shields.io/badge/Service%20Status-Implemented-green?logo=spotify" /> <img src="https://img.shields.io/badge/Service%20Status-PR%20Ready-yellow?logo=youtube" /> 

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Youtube2Mp3.Core.Entities;
@@ -21,12 +22,19 @@ namespace Youtube2Mp3.ConsoleUi.Services
         {
             System.Console.WriteLine("Attempting....");
             var tracks = await _trackRespository.LoadPlaylistAsync("https://open.spotify.com/playlist/0apX36HEcBc4qRsPoZcdRQ");
-            var track = tracks.FirstOrDefault(t => t.Title.ToLower() == "spectrum");
-
+            var tracksToDl = tracks.Take(5);
+            var timer = new Stopwatch();
             try
             {
-                await _downloadService.DownloadMediaAsync(track, "Music");
+                timer.Start();
+                foreach (var item in tracksToDl)
+                {
+                    await _downloadService.DownloadMediaAsync(item, "Music");
+                }
+                timer.Stop();
+                
                 System.Console.WriteLine("Yay!");
+                System.Console.WriteLine($"Time Taken: {timer.Elapsed.TotalSeconds}");
             }
             catch (System.Exception ex)
             {

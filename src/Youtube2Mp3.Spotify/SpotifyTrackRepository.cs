@@ -30,7 +30,7 @@ namespace Youtube2Mp3.Spotify
 
         public async Task<IEnumerable<Track>> LoadPlaylistAsync(string url)
         {
-            if (_webApi != null) { _webApi = await InitializeWebApi(); }
+            if (_webApi == null) { _webApi = await InitializeWebApi(); }
 
             try
             {

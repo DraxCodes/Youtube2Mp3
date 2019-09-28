@@ -2,24 +2,40 @@ using System.IO;
 using System.Threading.Tasks;
 using Youtube2Mp3.Core.Entities;
 using Youtube2Mp3.Core.Services;
+using Youtube2Mp3.Youtube.Helpers;
+using YoutubeExplode;
+using YoutubeExplode.Models;
+using YoutubeExplode.Models.MediaStreams;
 
 namespace Youtube2Mp3.Youtube.Services
 {
     public class YoutubeDownloadService : IDownloadService
     {
-        private readonly IStreamRepository _streamRepository;
+        private readonly YoutubeClient _client;
 
-        public YoutubeDownloadService(IStreamRepository streamRepository)
+        public YoutubeDownloadService(YoutubeClient client)
         {
-            _streamRepository = streamRepository;
+            _client = client;
         }
 
         public async Task DownloadMediaAsync(Track track, string filePath)
         {
-            var videoStream = await _streamRepository.GetStreamOfTrackAsync(track);
-            var bytes = videoStream.ToArray();
+            var stream = new MemoryStream();
+            var video = await SearchYoutubeAsync(track);
+            var trackId = Helper.GetVideoId(video);
 
-            File.WriteAllBytes($"{track.Title}.mp3", bytes);
+            var streamInfoSet = await _client.GetVideoMediaStreamInfosAsync(trackId);
+            var audioStreamInfo = streamInfoSet.Audio.WithHighestBitrate();
+
+            await _client.DownloadMediaStreamAsync(audioStreamInfo, $"{track.Title}.mp3");
+        }
+
+        private async Task<Video> SearchYoutubeAsync(Track track)
+        {
+            var videos = await _client.SearchVideosAsync(track.Title, 1);
+            var filteredResult = VideoFilter.ByTitleSingle(videos, track.Title);
+
+            return filteredResult;
         }
     }
 }

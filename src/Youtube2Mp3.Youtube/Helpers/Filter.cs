@@ -9,7 +9,7 @@ namespace Youtube2Mp3.Youtube.Helpers
     {
         public static Video ByTitleSingle(IReadOnlyList<Video> videos, string title)
         {
-            return videos.FirstOrDefault(v => v.Title == title);
+            return videos.FirstOrDefault(v => v.Title.Contains(title));
         }
 
         public static IEnumerable<Video> ByTitleMany(IReadOnlyList<Video> videos, string title)

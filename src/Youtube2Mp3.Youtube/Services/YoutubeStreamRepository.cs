@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Youtube2Mp3.Core.Entities;
 using Youtube2Mp3.Core.Services;
@@ -35,7 +36,7 @@ namespace Youtube2Mp3.Youtube.Services
 
         private async Task<Video> SearchYoutubeAsync(Track track)
         {
-            var videos = await _client.SearchVideosAsync(track.Title);
+            var videos = await _client.SearchVideosAsync(track.Title, 1);
             var filteredResult = VideoFilter.ByTitleSingle(videos, track.Title);
 
             return filteredResult;

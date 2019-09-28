@@ -27,7 +27,9 @@ namespace Youtube2Mp3.Youtube.Services
             var streamInfoSet = await _client.GetVideoMediaStreamInfosAsync(trackId);
             var audioStreamInfo = streamInfoSet.Audio.WithHighestBitrate();
 
-            await _client.DownloadMediaStreamAsync(audioStreamInfo, $"{track.Title}.mp3");
+            var ext = audioStreamInfo.Container.GetFileExtension();
+
+            await _client.DownloadMediaStreamAsync(audioStreamInfo, $"{track.Title}.{ext}");
         }
 
         private async Task<Video> SearchYoutubeAsync(Track track)

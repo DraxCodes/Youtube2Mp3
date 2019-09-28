@@ -14,18 +14,18 @@ namespace Youtube2Mp3.ConsoleUi.Services
         {
             _trackRespository = trackRespository;
             _downloadService = downloadService;
-            // _trackRespository.InitializeSpotifyAuth();
+            _trackRespository.InitializeSpotifyAuth("", "");
         }
 
         public async Task Test()
         {
             System.Console.WriteLine("Attempting....");
-            //var tracks = await _trackRespository.LoadPlaylistAsync("https://open.spotify.com/playlist/0apX36HEcBc4qRsPoZcdRQ");
-            //var track = tracks.FirstOrDefault(t => t.Title.ToLower() == "spectrum");
-            var track = new Track("Paradise City", new [] {"Guns n Roses"}, (uint)387000);
+            var tracks = await _trackRespository.LoadPlaylistAsync("https://open.spotify.com/playlist/0apX36HEcBc4qRsPoZcdRQ");
+            var track = tracks.FirstOrDefault(t => t.Title.ToLower() == "spectrum");
+
             try
             {
-                await _downloadService.DownloadMediaAsync(track, "./");
+                await _downloadService.DownloadMediaAsync(track, "Music");
                 System.Console.WriteLine("Yay!");
             }
             catch (System.Exception ex)

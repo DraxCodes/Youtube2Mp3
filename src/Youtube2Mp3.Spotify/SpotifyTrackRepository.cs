@@ -44,7 +44,7 @@ namespace Youtube2Mp3.Spotify
                 Parallel.ForEach(playlistItems, item =>
                 {
                     var artists = item.Track.Artists.Select(a => a.Name);
-                    result.Add(new Track(item.Track.Name, artists, (uint)item.Track.DurationMs));
+                    result.Add(new Track(item.Track.Name, artists, item.Track.DurationMs));
                 });
 
                 return result;

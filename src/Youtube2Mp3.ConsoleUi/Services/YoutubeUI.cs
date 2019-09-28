@@ -15,7 +15,7 @@ namespace Youtube2Mp3.ConsoleUi.Services
         {
             _trackRespository = trackRespository;
             _downloadService = downloadService;
-            _trackRespository.InitializeSpotifyAuth("", "");
+            _trackRespository.InitializeSpotifyAuth("DO NOT POST", "THIS INFO TO GITHUB");
         }
 
         public async Task Test()

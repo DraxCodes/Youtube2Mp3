@@ -21,6 +21,7 @@ namespace Youtube2Mp3.Youtube.Helpers
             var within = 10;
             var result = videos?.Select(x => new { x, distance = Math.Abs(x.Duration.TotalSeconds - duration.TotalSeconds) })
               .Where(p => p.distance <= within)
+              .OrderBy(p => p.distance)
               .Select(p => p.x);
 
             return result;

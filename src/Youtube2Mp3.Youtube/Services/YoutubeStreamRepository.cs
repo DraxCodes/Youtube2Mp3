@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Youtube2Mp3.Core.Entities;
 using Youtube2Mp3.Core.Services;
@@ -34,12 +36,53 @@ namespace Youtube2Mp3.Youtube.Services
             return stream;
         }
 
-        private async Task<Video> SearchYoutubeAsync(Track track)
+        private async Task<Video> SearchYoutubeByTitleAsync(Track track, bool appendLyrics = false)
         {
             var videos = await _client.SearchVideosAsync(track.Title, 1);
             var filteredResult = videos.GetByTitle(track.Title);
 
+            if (appendLyrics)
+            {
+                filteredResult = videos.GetManyByTitle(track.Title).GetByTitle("lyrics");
+            }
+
             return filteredResult;
+        }
+
+        private async Task<Video> SearchYoutubeAsync(Track track, bool appendLyrics = false)
+        {
+            var videos = await _client.SearchVideosAsync($"{track.Authors.First()} - {track.Title}", 1);
+            var result = videos.GetManyByTitle(track.Title);
+            var filteredResult = result.GetByArtists(track.Authors);
+
+            if (appendLyrics)
+            {
+                filteredResult = result.GetManyByTitle("lyrics").GetByArtists(track.Authors);
+            }
+
+            return filteredResult;
+        }
+
+        private async Task<Video> SearchYoutubeWithDurationAsync(Track track, bool appendLyrics = false)
+        {
+            var videos = await _client.SearchVideosAsync(track.Title, 1);
+            var result = videos.GetManyByTitle(track.Title);
+            var filteredResult = result.GetByClosestTime(track.Duration);
+
+            if (appendLyrics)
+            {
+                filteredResult = result.GetManyByTitle("lyrics").GetByClosestTime(track.Duration);
+            }
+
+            return filteredResult;
+        }
+
+        private async Task<Video> GetBestYoutubeResultAsync(Track track, TimeSpan duration, bool appendLyrics)
+        {
+            var videos = await _client.SearchVideosAsync($"{track.Authors.First()} - {track.Title}", 1);
+            var bestMatch = videos.GetBestMatch(duration, track.Title, track.Authors, appendLyrics);
+
+            return bestMatch;
         }
     }
 }

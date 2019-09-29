@@ -28,7 +28,7 @@ namespace Youtube2Mp3.Youtube.Helpers
         }
 
         public static Video GetByArtists(this IEnumerable<Video> videos, IEnumerable<string> authors)
-            => videos.GetManyByAuthors(authors).FirstOrDefault();
+            => videos.GetManyByArtists(authors).FirstOrDefault();
 
         public static IEnumerable<Video> GetManyByArtists(this IEnumerable<Video> videos, IEnumerable<string> authors)
             => videos?.SelectMany(video => authors?.Where(author => video.Title.Contains(author)).Select(author => video));

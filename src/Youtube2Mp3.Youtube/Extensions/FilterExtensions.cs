@@ -26,27 +26,11 @@ namespace Youtube2Mp3.Youtube.Helpers
             return result;
         }
 
-        private static Video GetByAuthor(this IEnumerable<Video> videos, IEnumerable<string> authors)
+        public static Video GetByArtists(this IEnumerable<Video> videos, IEnumerable<string> authors)
             => videos.GetManyByAuthors(authors).FirstOrDefault();
 
-        private static IEnumerable<Video> GetManyByAuthors(this IEnumerable<Video> videos, IEnumerable<string> authors)
-        {
-            var filteredVideos = new List<Video>();
-
-            // This is ugly and needs to be refactored.
-            foreach (var video in videos)
-            {
-                foreach (var author in authors)
-                {
-                    if (video.Title.Contains(author) && !filteredVideos.Contains(video))
-                    {
-                        filteredVideos.Add(video);
-                    }
-                }
-            }
-
-            return filteredVideos;
-        }
+        public static IEnumerable<Video> GetManyByArtists(this IEnumerable<Video> videos, IEnumerable<string> authors)
+            => videos?.SelectMany(video => authors?.Where(author => video.Title.Contains(author)).Select(author => video));
 
         public static Video GetBestMatch(this IEnumerable<Video> videos, TimeSpan duration,
             string title, IEnumerable<string> artists, bool appendLyrics = false)
@@ -61,7 +45,7 @@ namespace Youtube2Mp3.Youtube.Helpers
             if (appendLyrics) { titleResults = titleResults?.GetManyByTitle("lyrics"); }
 
             var durationResults = titleResults?.GetManyByClosestTime(duration);
-            var artistsResults = durationResults?.GetManyByAuthors(artists);
+            var artistsResults = durationResults?.GetManyByArtists(artists);
 
             return artistsResults;
         }

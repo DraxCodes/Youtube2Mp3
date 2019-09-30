@@ -1,8 +1,11 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Youtube2Mp3.Core.Entities;
+using Youtube2Mp3.Core.Extensions;
 using Youtube2Mp3.Core.Services;
+using Youtube2Mp3.Youtube.Extensions;
 
 namespace Youtube2Mp3.Youtube.Services
 {
@@ -15,11 +18,11 @@ namespace Youtube2Mp3.Youtube.Services
             _streamRepository = streamRepository;
         }
 
-        public async Task DownloadMediaAsync(Track track, string filePath)
+        public async Task DownloadMediaAsync(Track track, string filePath, bool appendLyrics, bool useAuthor)
         {
             EnsurePathExists(filePath);
 
-            var stream = await _streamRepository.GetStreamOfTrackAsync(track);
+            var stream = await _streamRepository.GetStreamOfTrackAsync(track, appendLyrics, useAuthor);
             var streamArray = stream.ToArray();
 
             if (stream.Length < 1)
@@ -28,7 +31,11 @@ namespace Youtube2Mp3.Youtube.Services
                 return;
             }
 
-            File.WriteAllBytes($"{filePath}/{track.Title}.mp3", streamArray);
+            var trackSaveName = track.FormatSafeTrackName();
+
+            File.WriteAllBytes($"{filePath}/{trackSaveName}.mp3", streamArray);
+
+            await stream.FlushAsync();
         }
 
         private void EnsurePathExists(string filePath)

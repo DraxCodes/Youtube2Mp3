@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Youtube2Mp3.Core.Entities;
 using Youtube2Mp3.Core.Services;
+using Youtube2Mp3.Youtube.Extensions;
 using Youtube2Mp3.Youtube.Helpers;
 using YoutubeExplode;
 using YoutubeExplode.Models;
@@ -20,69 +21,45 @@ namespace Youtube2Mp3.Youtube.Services
             _client = client;
         }
 
-        public async Task<MemoryStream> GetStreamOfTrackAsync(Track track)
+        public async Task<MemoryStream> GetStreamOfTrackAsync(Track track, bool appendLyrics, bool useAuthor)
         {
             var stream = new MemoryStream();
-            var video = await SearchYoutubeAsync(track);
+            var video = await SearchYoutubeAsync(track, appendLyrics, useAuthor);
 
             if (video is null || video.Id is null) { return stream; }
 
             var streamInfoSet = await _client.GetVideoMediaStreamInfosAsync(video.Id);
             var audioStreamInfo = streamInfoSet.Audio.WithHighestBitrate();
 
-            var mediaStream = await _client.GetMediaStreamAsync(audioStreamInfo);
-            mediaStream.CopyTo(stream);
+            if (audioStreamInfo is null) { return stream; }
+
+            try
+            {
+                var mediaStream = await _client.GetMediaStreamAsync(audioStreamInfo);
+                await mediaStream.CopyToAsync(stream);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Youtube Error.. {video.Title}");
+                return stream;
+            }
+            
 
             return stream;
         }
 
-        private async Task<Video> SearchYoutubeByTitleAsync(Track track, bool appendLyrics = false)
+        private async Task<Video> SearchYoutubeAsync(Track track, bool shouldUseLyrics, bool shouldUseAuthor)
         {
-            var videos = await _client.SearchVideosAsync(track.Title, 1);
-            var filteredResult = videos.GetByTitle(track.Title);
+            string ytQuery = track.QueryFormat(shouldUseAuthor, shouldUseLyrics);
 
-            if (appendLyrics)
-            {
-                filteredResult = videos.GetManyByTitle(track.Title).GetByTitle("lyrics");
-            }
+            var videos = await _client.SearchVideosAsync(ytQuery, 1);
 
-            return filteredResult;
-        }
+            var durationFilter = TimeSpan.FromSeconds(30);
+            var videoFilteredByDuration = videos.FilterClosestTime(track, durationFilter);
 
-        private async Task<Video> SearchYoutubeAsync(Track track, bool appendLyrics = false)
-        {
-            var videos = await _client.SearchVideosAsync($"{track.Authors.First()} - {track.Title}", 1);
-            var result = videos.GetManyByTitle(track.Title);
-            var filteredResult = result.GetByArtists(track.Authors);
+            if (videoFilteredByDuration is null) { return videos.FirstOrDefault(); }
 
-            if (appendLyrics)
-            {
-                filteredResult = result.GetManyByTitle("lyrics").GetByArtists(track.Authors);
-            }
-
-            return filteredResult;
-        }
-
-        private async Task<Video> SearchYoutubeWithDurationAsync(Track track, bool appendLyrics = false)
-        {
-            var videos = await _client.SearchVideosAsync(track.Title, 1);
-            var result = videos.GetManyByTitle(track.Title);
-            var filteredResult = result.GetByClosestTime(track.Duration);
-
-            if (appendLyrics)
-            {
-                filteredResult = result.GetManyByTitle("lyrics").GetByClosestTime(track.Duration);
-            }
-
-            return filteredResult;
-        }
-
-        private async Task<Video> GetBestYoutubeResultAsync(Track track, TimeSpan duration, bool appendLyrics)
-        {
-            var videos = await _client.SearchVideosAsync($"{track.Authors.First()} - {track.Title}", 1);
-            var bestMatch = videos.GetBestMatch(duration, track.Title, track.Authors, appendLyrics);
-
-            return bestMatch;
+            return videoFilteredByDuration;
         }
     }
 }

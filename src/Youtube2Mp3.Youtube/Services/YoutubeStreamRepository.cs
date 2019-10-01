@@ -21,10 +21,10 @@ namespace Youtube2Mp3.Youtube.Services
             _client = client;
         }
 
-        public async Task<MemoryStream> GetStreamOfTrackAsync(Track track, bool appendLyrics, bool useAuthor)
+        public async Task<MemoryStream> GetStreamOfTrackAsync(Track track, bool appendLyrics, bool useAuthor, bool shouldFallBack = true)
         {
             var stream = new MemoryStream();
-            var video = await SearchYoutubeAsync(track, appendLyrics, useAuthor);
+            var video = await SearchYoutubeAsync(track, appendLyrics, useAuthor, shouldFallBack);
 
             if (video is null || video.Id is null) { return stream; }
 
@@ -48,7 +48,7 @@ namespace Youtube2Mp3.Youtube.Services
             return stream;
         }
 
-        private async Task<Video> SearchYoutubeAsync(Track track, bool shouldUseLyrics, bool shouldUseAuthor)
+        private async Task<Video> SearchYoutubeAsync(Track track, bool shouldUseLyrics, bool shouldUseAuthor, bool shouldFallback)
         {
             string ytQuery = track.QueryFormat(shouldUseAuthor, shouldUseLyrics);
 
@@ -57,7 +57,7 @@ namespace Youtube2Mp3.Youtube.Services
             var durationFilter = TimeSpan.FromSeconds(30);
             var videoFilteredByDuration = videos.FilterClosestTime(track, durationFilter);
 
-            if (videoFilteredByDuration is null) { return videos.FirstOrDefault(); }
+            if (videoFilteredByDuration is null && shouldFallback) { return videos.FirstOrDefault(); }
 
             return videoFilteredByDuration;
         }

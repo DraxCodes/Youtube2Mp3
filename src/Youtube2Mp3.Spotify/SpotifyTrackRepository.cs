@@ -41,11 +41,11 @@ namespace Youtube2Mp3.Spotify
 
                 var playlistItems = playlist.Tracks.Items;
 
-                Parallel.ForEach(playlistItems, item =>
+                foreach (var item in playlistItems)
                 {
                     var artists = item.Track.Artists.Select(a => a.Name);
                     result.Add(new Track(item.Track.Name, artists, item.Track.DurationMs));
-                });
+                }
 
                 return result;
             }

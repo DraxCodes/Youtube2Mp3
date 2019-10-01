@@ -16,11 +16,11 @@ namespace Youtube2Mp3.Youtube.Services
             _streamRepository = streamRepository;
         }
 
-        public async Task DownloadMediaAsync(Track track, string filePath, bool appendLyrics, bool useAuthor)
+        public async Task DownloadMediaAsync(Track track, string filePath, bool appendLyrics, bool useAuthor, bool allowFallback = true)
         {
             EnsurePathExists(filePath);
 
-            var stream = await _streamRepository.GetStreamOfTrackAsync(track, appendLyrics, useAuthor);
+            var stream = await _streamRepository.GetStreamOfTrackAsync(track, appendLyrics, useAuthor, allowFallback);
             var streamArray = stream.ToArray();
 
             if (stream.Length < 1)

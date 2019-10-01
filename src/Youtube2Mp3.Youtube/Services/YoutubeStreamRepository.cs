@@ -21,7 +21,7 @@ namespace Youtube2Mp3.Youtube.Services
             _client = client;
         }
 
-        public async Task<MemoryStream> GetStreamOfTrackAsync(Track track, bool appendLyrics, bool useAuthor, bool shouldFallBack = true)
+        public async Task<MemoryStream> GetStreamOfTrackAsync(Track track, bool appendLyrics, bool useAuthor, bool shouldFallBack)
         {
             var stream = new MemoryStream();
             var video = await SearchYoutubeAsync(track, appendLyrics, useAuthor, shouldFallBack);

@@ -14,7 +14,7 @@ namespace Youtube2Mp3.Youtube.Services
 {
     public class YoutubeStreamRepository : IStreamRepository
     {
-        private YoutubeClient _client;
+        private readonly YoutubeClient _client;
 
         public YoutubeStreamRepository(YoutubeClient client)
         {

@@ -9,6 +9,8 @@ using Youtube2Mp3.Youtube.Helpers;
 using YoutubeExplode;
 using YoutubeExplode.Models;
 using YoutubeExplode.Models.MediaStreams;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Youtube2Mp3.Youtube.Services
 {
@@ -46,6 +48,22 @@ namespace Youtube2Mp3.Youtube.Services
             
             return stream;
         }
+
+        public async Task<IEnumerable<Track>> SearchAsync(Track track)
+        {
+            var videos = await _client.SearchVideosAsync($"{track.Authors.FirstOrDefault()} - {track.Title}", 1);
+            var tracks = new Collection<Track>();
+
+            foreach (var video in videos)
+            {
+               tracks.Add(ConvertTrack(video));
+            }
+
+            return tracks;
+        }
+
+        private Track ConvertTrack(Video video)
+            => new Track(video.Title, new[] { video.Author }, (int)video.Duration.TotalMilliseconds);
 
         private async Task<Video> SearchYoutubeAsync(Track track, bool shouldUseLyrics, bool shouldUseAuthor, bool shouldFallback)
         {

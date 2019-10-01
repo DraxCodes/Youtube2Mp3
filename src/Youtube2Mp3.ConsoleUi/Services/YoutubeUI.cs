@@ -21,17 +21,19 @@ namespace Youtube2Mp3.ConsoleUi.Services
         public async Task Test()
         {
             Console.WriteLine("Attempting....");
-            var tracks = await _trackRespository.LoadPlaylistAsync("https://open.spotify.com/playlist/0apX36HEcBc4qRsPoZcdRQ");
+            var tracks = await _trackRespository.LoadPlaylistAsync("https://open.spotify.com/playlist/6L4Q1YP0TiStXFvxjwPFvi");
             var tracksToDl = tracks.OrderBy(t => t.Title);
             var timer = new Stopwatch();
+
             int i = 1;
+
             try
             {
                 timer.Start();
-                foreach (var item in tracksToDl)
+                foreach (var track in tracksToDl)
                 {
-                    await _downloadService.DownloadMediaAsync(item, "Music");
-                    Console.WriteLine($"{i}{item.Title} Downloaded.");
+                    await _downloadService.DownloadMediaAsync(track: track, filePath: "Music", appendLyrics: true, useAuthor: true);
+                    Console.WriteLine($"[{i}]     {track.Title} Downloaded.");
                     i++;
                 }
                 timer.Stop();

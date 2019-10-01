@@ -5,6 +5,6 @@ namespace Youtube2Mp3.Core.Services
 {
     public interface IDownloadService
     {
-        Task DownloadMediaAsync(Track track, string filePath);
+        Task DownloadMediaAsync(Track track, string filePath, bool appendLyrics, bool useAuthor);
     }
 }

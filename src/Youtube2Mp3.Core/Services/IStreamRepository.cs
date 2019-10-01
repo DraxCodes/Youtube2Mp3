@@ -7,7 +7,8 @@ namespace Youtube2Mp3.Core.Services
 {
     public interface IStreamRepository
     {
-        Task<MemoryStream> GetStreamOfTrackAsync(Track track, bool appendLyrics, bool useAuthor, bool shouldDefault);
-        Task<IEnumerable<Track>> SearchAsync(Track track);
+        Task<MemoryStream> GetStreamByTrackAsync(Track track, bool appendLyrics, bool useAuthor, bool shouldDefault);
+        Task<MemoryStream> GetStreamByYoutubeTrackAsync(YoutubeTrack track);
+        Task<IEnumerable<YoutubeTrack>> SearchAsync(Track track);
     }
 }

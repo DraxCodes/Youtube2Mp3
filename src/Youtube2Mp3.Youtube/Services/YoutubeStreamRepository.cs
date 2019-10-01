@@ -23,7 +23,29 @@ namespace Youtube2Mp3.Youtube.Services
             _client = client;
         }
 
-        public async Task<MemoryStream> GetStreamOfTrackAsync(Track track, bool appendLyrics, bool useAuthor, bool shouldFallBack)
+        public async Task<MemoryStream> GetStreamByYoutubeTrackAsync(YoutubeTrack track)
+        {
+            var stream = new MemoryStream();
+            var streamInfoSet = await _client.GetVideoMediaStreamInfosAsync(track.Id);
+            var audioStreamInfo = streamInfoSet.Audio.WithHighestBitrate();
+
+            if (audioStreamInfo is null) { return stream; }
+
+            try
+            {
+                var mediaStream = await _client.GetMediaStreamAsync(audioStreamInfo);
+                await mediaStream.CopyToAsync(stream);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Youtube Error... {track.Title}");
+                return stream;
+            }
+
+            return stream;
+        }
+
+        public async Task<MemoryStream> GetStreamByTrackAsync(Track track, bool appendLyrics, bool useAuthor, bool shouldFallBack)
         {
             var stream = new MemoryStream();
             var video = await SearchYoutubeAsync(track, appendLyrics, useAuthor, shouldFallBack);
@@ -49,10 +71,10 @@ namespace Youtube2Mp3.Youtube.Services
             return stream;
         }
 
-        public async Task<IEnumerable<Track>> SearchAsync(Track track)
+        public async Task<IEnumerable<YoutubeTrack>> SearchAsync(Track track)
         {
             var videos = await _client.SearchVideosAsync($"{track.Authors.FirstOrDefault()} - {track.Title}", 1);
-            var tracks = new Collection<Track>();
+            var tracks = new Collection<YoutubeTrack>();
 
             foreach (var video in videos)
             {
@@ -62,8 +84,8 @@ namespace Youtube2Mp3.Youtube.Services
             return tracks;
         }
 
-        private Track ConvertTrack(Video video)
-            => new Track(video.Title, new[] { video.Author }, (int)video.Duration.TotalMilliseconds);
+        private YoutubeTrack ConvertTrack(Video video)
+            => new YoutubeTrack(video.Title, new[] { video.Author }, (int)video.Duration.TotalMilliseconds, video.Id);
 
         private async Task<Video> SearchYoutubeAsync(Track track, bool shouldUseLyrics, bool shouldUseAuthor, bool shouldFallback)
         {

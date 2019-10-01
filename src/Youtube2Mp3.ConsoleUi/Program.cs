@@ -13,7 +13,9 @@ namespace Youtube2Mp3.ConsoleUi
             var ytClient = services.GetRequiredService<YoutubeUI>();
             //await ytClient.SpotifyPlaylistYoutubeDownloadTest();
 
-            await ytClient.SearchYoutubeTest();
+            //await ytClient.SearchYoutubeTest();
+
+            await ytClient.YoutubeSearchAndDownloadTest();
         }
     }
 }

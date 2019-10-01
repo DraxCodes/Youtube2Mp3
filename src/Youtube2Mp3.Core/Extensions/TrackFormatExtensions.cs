@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using Youtube2Mp3.Core.Entities;
-using Youtube2Mp3.Core.Extensions;
 
-namespace Youtube2Mp3.Youtube.Extensions
+namespace Youtube2Mp3.Core.Extensions
 {
     public static class TrackFormatExtensions
     {

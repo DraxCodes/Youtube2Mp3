@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Youtube2Mp3.Core.Entities;
 using Youtube2Mp3.Core.Extensions;
 using Youtube2Mp3.Core.Services;
-using Youtube2Mp3.Youtube.Extensions;
 
 namespace Youtube2Mp3.Youtube.Services
 {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SpotifyAPI.Web;
@@ -15,7 +16,13 @@ namespace Youtube2Mp3.Spotify
         private SpotifyWebAPI _webApi;
         private SpotifyAuth _auth = new SpotifyAuth();
 
-        public SpotifyTrackRepository(string clientId, string clientSecret)
+        public void InitializeSpotifyAuth(string clientId, string clientSecret)
+        {
+            _auth.ClientId = clientId;
+            _auth.ClientSecret = clientSecret;
+        }
+
+        public void InitializeSptofyConnection(string clientId, string clientSecret)
         {
             _auth.ClientId = clientId;
             _auth.ClientSecret = clientSecret;
@@ -23,22 +30,31 @@ namespace Youtube2Mp3.Spotify
 
         public async Task<IEnumerable<Track>> LoadPlaylistAsync(string url)
         {
-            if (_webApi != null) { _webApi = await InitializeWebApi(); }
+            if (_webApi == null) { _webApi = await InitializeWebApi(); }
 
-            var playlist = _webApi.GetPlaylistByUrl(url);
-            var result = new List<Track>();
-
-            if (playlist is null) { return result; }
-
-            var playlistItems = playlist.Tracks.Items;
-
-            Parallel.ForEach(playlistItems, item =>
+            try
             {
-                var artists = item.Track.Artists.Select(a => a.Name);
-                result.Add(new Track(item.Track.Name, artists, (uint)item.Track.DurationMs));
-            });
+                var playlist = _webApi.GetPlaylistByUrl(url);
+                var result = new List<Track>();
 
-            return result;
+                if (playlist is null) { return result; }
+
+                var playlistItems = playlist.Tracks.Items;
+
+                foreach (var item in playlistItems)
+                {
+                    var artists = item.Track.Artists.Select(a => a.Name);
+                    result.Add(new Track(item.Track.Name, artists, item.Track.DurationMs));
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+                throw new Exception("Playlist not found or auth failed. Please ensure your Spotify Client ID & Secret are set. Also Ensure the playlist URL is valid.");
+            }
+
         }
 
         private async Task<SpotifyWebAPI> InitializeWebApi()
@@ -51,7 +67,6 @@ namespace Youtube2Mp3.Spotify
                 AccessToken = token.AccessToken,
                 TokenType = "Bearer"
             };
-
             return api;
         }
     }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Youtube2Mp3.ConsoleUi.Services;
-using Youtube2Mp3.Core.Services;
 using Youtube2Mp3.IOC;
 using System;
 

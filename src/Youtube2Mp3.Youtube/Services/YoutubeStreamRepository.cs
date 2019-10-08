@@ -98,7 +98,7 @@ namespace Youtube2Mp3.Youtube.Services
 
             if (videoFilteredByDuration is null && shouldFallback) { return videos.FirstOrDefault(); }
 
-            return videoFilteredByDuration;
+            return videoFilteredByDuration!;
         }
     }
 }

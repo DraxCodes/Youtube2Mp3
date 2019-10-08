@@ -11,7 +11,7 @@ namespace Youtube2Mp3.Tests
         [InlineData(" ")]
         public void ShouldReturnNullIfEmptyUrl(string input)
         {
-            string expected = null!;
+            string? expected = null;
             var actual = SpotifyClientExtensions.ParseSpotifyIdFromUrl(input);
 
             Assert.Equal(expected, actual);

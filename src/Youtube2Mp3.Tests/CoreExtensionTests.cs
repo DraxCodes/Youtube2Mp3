@@ -18,7 +18,7 @@ namespace Youtube2Mp3.Tests
         [InlineData("Test>Char")]
         public void ShouldReplaceBadFileNameChars(string input)
         {
-            const string expected = "Test_Char";
+            var expected = "Test_Char";
             var actual = input.RemoveIllegalPathCharacters();
 
             Assert.Equal(expected, actual);
@@ -28,7 +28,7 @@ namespace Youtube2Mp3.Tests
         public void TrackQueryFormatShouldReturnAppendedLyrics()
         {
             var track = new Track("Test Title", new[] { "Test Author" }, 23244);
-            const string expected = "Test Author - Test Title lyrics";
+            var expected = "Test Author - Test Title lyrics";
             var actual = track.QueryFormat(true, true);
 
             Assert.Equal(expected, actual);
@@ -38,7 +38,7 @@ namespace Youtube2Mp3.Tests
         public void TrackQueryFormatShouldNotAppendLyrics()
         {
             var track = new Track("Test Title", new[] { "Test Author" }, 23244);
-            const string expected = "Test Author - Test Title";
+            var expected = "Test Author - Test Title";
             var actual = track.QueryFormat(true, false);
 
             Assert.Equal(expected, actual);
@@ -48,7 +48,7 @@ namespace Youtube2Mp3.Tests
         public void TrackQueryFormatShouldOnlyReturnTitle()
         {
             var track = new Track("Test Title", new[] { "Test Author" }, 23244);
-            const string expected = "Test Title";
+            var expected = "Test Title";
             var actual = track.QueryFormat(false, false);
 
             Assert.Equal(expected, actual);

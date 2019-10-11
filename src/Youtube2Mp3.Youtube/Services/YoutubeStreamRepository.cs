@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using Youtube2Mp3.Core.Entities;
 using Youtube2Mp3.Core.Services;
 using Youtube2Mp3.Core.Extensions;
-using Youtube2Mp3.Youtube.Helpers;
 using YoutubeExplode;
 using YoutubeExplode.Models;
 using YoutubeExplode.Models.MediaStreams;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Youtube2Mp3.Youtube.Extensions;
 
 namespace Youtube2Mp3.Youtube.Services
 {
@@ -50,7 +50,7 @@ namespace Youtube2Mp3.Youtube.Services
             var stream = new MemoryStream();
             var video = await SearchYoutubeAsync(track, appendLyrics, useAuthor, shouldFallBack);
 
-            if (video is null || video.Id is null) { return stream; }
+            if (video?.Id is null) { return stream; }
 
             var streamInfoSet = await _client.GetVideoMediaStreamInfosAsync(video.Id);
             var audioStreamInfo = streamInfoSet.Audio.WithHighestBitrate();
@@ -84,7 +84,7 @@ namespace Youtube2Mp3.Youtube.Services
             return tracks;
         }
 
-        private YoutubeTrack ConvertTrack(Video video)
+        private static YoutubeTrack ConvertTrack(Video video)
             => new YoutubeTrack(video.Title, new[] { video.Author }, (int)video.Duration.TotalMilliseconds, video.Id);
 
         private async Task<Video> SearchYoutubeAsync(Track track, bool shouldUseLyrics, bool shouldUseAuthor, bool shouldFallback)
@@ -96,9 +96,9 @@ namespace Youtube2Mp3.Youtube.Services
             var durationFilter = TimeSpan.FromSeconds(30);
             var videoFilteredByDuration = videos.FilterClosestTime(track, durationFilter);
 
-            if (videoFilteredByDuration is null && shouldFallback) { return videos.FirstOrDefault(); }
-
-            return videoFilteredByDuration;
+            return videoFilteredByDuration is null && shouldFallback
+                ? videos.FirstOrDefault()
+                : videoFilteredByDuration;
         }
     }
 }

@@ -17,9 +17,10 @@ namespace Youtube2Mp3.Core.Extensions
         {
             var author = track.Authors.FirstOrDefault();
 
-            return string.IsNullOrEmpty(author)
-                ? $"{track.Title}".RemoveIllegalPathCharacters()
-                : $"{author} - {track.Title}".RemoveIllegalPathCharacters();
+            if (string.IsNullOrEmpty(author))
+                return $"{track.Title}".RemoveIllegalPathCharacters();
+            else
+                return $"{author} - {track.Title}".RemoveIllegalPathCharacters();
         }
     }
 }

@@ -56,7 +56,7 @@ namespace Youtube2Mp3.Youtube.Services
             await stream.FlushAsync();
         }
 
-        private static void EnsurePathExists(string filePath)
+        private void EnsurePathExists(string filePath)
         {
             if (Directory.Exists(filePath)) { return; }
 

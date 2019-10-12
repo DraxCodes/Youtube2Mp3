@@ -22,7 +22,7 @@ namespace Youtube2Mp3.Spotify
             _auth.ClientSecret = clientSecret;
         }
 
-        public void InitializeSpotifyConnection(string clientId, string clientSecret)
+        public void InitializeSptofyConnection(string clientId, string clientSecret)
         {
             _auth.ClientId = clientId;
             _auth.ClientSecret = clientSecret;
@@ -61,13 +61,13 @@ namespace Youtube2Mp3.Spotify
         {
             var auth = new CredentialsAuth(_auth.ClientId, _auth.ClientSecret);
             var token = await auth.GetToken();
-
-            return new SpotifyWebAPI
+            SpotifyWebAPI api = new SpotifyWebAPI
             {
                 UseAuth = true,
                 AccessToken = token.AccessToken,
                 TokenType = "Bearer"
             };
+            return api;
         }
     }
 }

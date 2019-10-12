@@ -13,8 +13,8 @@ namespace Youtube2Mp3.Spotify
 {
     public class SpotifyTrackRepository : ITrackRespository
     {
-        private SpotifyWebAPI _webApi;
-        private readonly SpotifyAuth _auth = new SpotifyAuth();
+        private SpotifyWebAPI? _webApi;
+        private SpotifyAuth _auth = new SpotifyAuth();
 
         public void InitializeSpotifyAuth(string clientId, string clientSecret)
         {

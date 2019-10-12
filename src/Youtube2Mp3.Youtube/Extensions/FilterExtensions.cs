@@ -4,7 +4,7 @@ using System.Linq;
 using Youtube2Mp3.Core.Entities;
 using YoutubeExplode.Models;
 
-namespace Youtube2Mp3.Youtube.Helpers
+namespace Youtube2Mp3.Youtube.Extensions
 {
     public static class VideoFilter
     {

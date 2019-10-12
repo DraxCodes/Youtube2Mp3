@@ -14,7 +14,7 @@ namespace Youtube2Mp3.Spotify
     public class SpotifyTrackRepository : ITrackRespository
     {
         private SpotifyWebAPI? _webApi;
-        private SpotifyAuth _auth = new SpotifyAuth();
+        private readonly SpotifyAuth _auth = new SpotifyAuth();
 
         public void InitializeSpotifyAuth(string clientId, string clientSecret)
         {
@@ -22,7 +22,7 @@ namespace Youtube2Mp3.Spotify
             _auth.ClientSecret = clientSecret;
         }
 
-        public void InitializeSptofyConnection(string clientId, string clientSecret)
+        public void InitializeSpotifyConnection(string clientId, string clientSecret)
         {
             _auth.ClientId = clientId;
             _auth.ClientSecret = clientSecret;
@@ -61,13 +61,12 @@ namespace Youtube2Mp3.Spotify
         {
             var auth = new CredentialsAuth(_auth.ClientId, _auth.ClientSecret);
             var token = await auth.GetToken();
-            SpotifyWebAPI api = new SpotifyWebAPI
+            return new SpotifyWebAPI
             {
                 UseAuth = true,
                 AccessToken = token.AccessToken,
                 TokenType = "Bearer"
             };
-            return api;
         }
     }
 }

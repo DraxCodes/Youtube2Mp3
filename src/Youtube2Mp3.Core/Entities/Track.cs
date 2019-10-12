@@ -17,8 +17,6 @@ namespace Youtube2Mp3.Core.Entities
         }
 
         private TimeSpan GenerateTimeSpan(int durationMilliSeconds)
-        {
-            return TimeSpan.FromMilliseconds(durationMilliSeconds);
-        }
+            => TimeSpan.FromMilliseconds(durationMilliSeconds);
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Youtube2Mp3.Core.Entities;
 using Youtube2Mp3.Core.Services;
 using Youtube2Mp3.Core.Extensions;
-using Youtube2Mp3.Youtube.Helpers;
+using Youtube2Mp3.Youtube.Extensions;
 using YoutubeExplode;
 using YoutubeExplode.Models;
 using YoutubeExplode.Models.MediaStreams;
@@ -50,7 +50,7 @@ namespace Youtube2Mp3.Youtube.Services
             var stream = new MemoryStream();
             var video = await SearchYoutubeAsync(track, appendLyrics, useAuthor, shouldFallBack);
 
-            if (video is null || video.Id is null) { return stream; }
+            if (video?.Id is null) { return stream; }
 
             var streamInfoSet = await _client.GetVideoMediaStreamInfosAsync(video.Id);
             var audioStreamInfo = streamInfoSet.Audio.WithHighestBitrate();
@@ -94,11 +94,9 @@ namespace Youtube2Mp3.Youtube.Services
             var videos = await _client.SearchVideosAsync(ytQuery, 1);
 
             var durationFilter = TimeSpan.FromSeconds(30);
-            var videoFilteredByDuration = videos.FilterClosestTime(track, durationFilter);
+            var videoFilteredByDuration = videos?.FilterClosestTime(track, durationFilter);
 
-            if (videoFilteredByDuration is null && shouldFallback) { return videos.FirstOrDefault(); }
-
-            return videoFilteredByDuration;
+            return videoFilteredByDuration is null && shouldFallback ? videos.FirstOrDefault() : videoFilteredByDuration;
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
 using Youtube2Mp3.Xamarin.Models;
 using Youtube2Mp3.Xamarin.ViewModels;
 

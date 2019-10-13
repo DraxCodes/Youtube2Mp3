@@ -96,7 +96,7 @@ namespace Youtube2Mp3.Youtube.Services
             var durationFilter = TimeSpan.FromSeconds(30);
             var videoFilteredByDuration = videos?.FilterClosestTime(track, durationFilter);
 
-            return videoFilteredByDuration is null && shouldFallback ? videos.FirstOrDefault() : videoFilteredByDuration;
+            return videoFilteredByDuration is null || shouldFallback ? videos.FirstOrDefault() : videoFilteredByDuration;
         }
     }
 }

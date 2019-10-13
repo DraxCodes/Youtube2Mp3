@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 using Youtube2Mp3.Xamarin.Models;
 

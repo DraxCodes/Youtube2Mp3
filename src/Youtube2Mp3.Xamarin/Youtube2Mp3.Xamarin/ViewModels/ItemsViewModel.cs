@@ -17,7 +17,7 @@ namespace Youtube2Mp3.Xamarin.ViewModels
 
         public ItemsViewModel()
         {
-            Title = "Browse";
+            Title = "Elle moe";
             Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 

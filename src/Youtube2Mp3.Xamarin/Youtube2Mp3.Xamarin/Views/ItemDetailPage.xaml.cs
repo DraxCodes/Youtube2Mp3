@@ -10,27 +10,26 @@ namespace Youtube2Mp3.Xamarin.Views
     [DesignTimeVisible(false)]
     public partial class ItemDetailPage : ContentPage
     {
-        ItemDetailViewModel viewModel;
+        private ItemDetailViewModel _viewModel;
 
         public ItemDetailPage(ItemDetailViewModel viewModel)
         {
             InitializeComponent();
 
-            BindingContext = this.viewModel = viewModel;
+            BindingContext = _viewModel = viewModel;
         }
-
         public ItemDetailPage()
         {
             InitializeComponent();
 
             var item = new Item
             {
-                Text = "Item 1",
-                Description = "This is an item description."
+                Text = "Placeholder text",
+                Description = "If you see this, something probably went wrong."
             };
 
-            viewModel = new ItemDetailViewModel(item);
-            BindingContext = viewModel;
+            _viewModel = new ItemDetailViewModel(item);
+            BindingContext = _viewModel;
         }
     }
 }

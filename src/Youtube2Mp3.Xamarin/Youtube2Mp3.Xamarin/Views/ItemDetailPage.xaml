@@ -8,10 +8,12 @@
              Title="{Binding Title}">
 
     <StackLayout Spacing="20" Padding="15">
-        <Label Text="Text:" FontSize="Medium" />
-        <Label Text="{Binding Item.Text}" d:Text="Item name" FontSize="Small"/>
-        <Label Text="Description:" FontSize="Medium" />
-        <Label Text="{Binding Item.Description}" d:Text="Item description" FontSize="Small"/>
+        <Label Text="{Binding Item.Text}" d:Text="Item name" FontSize="Title"/>
+        <Label Text="{Binding Item.Description}" d:Text="Item description" FontSize="Medium"/>
+        
+        <ImageButton Command="{Binding DeleteCurrentItem}" Source="delete.png" Aspect="AspectFit"
+                VerticalOptions="End" HorizontalOptions="End" 
+                WidthRequest="60" HeightRequest="60" BackgroundColor="Red" CornerRadius="30"/>
     </StackLayout>
-    
+
 </ContentPage>

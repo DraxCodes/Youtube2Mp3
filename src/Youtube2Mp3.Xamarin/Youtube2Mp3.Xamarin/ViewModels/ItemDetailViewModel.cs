@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Youtube2Mp3.Xamarin.Models;
 
 namespace Youtube2Mp3.Xamarin.ViewModels

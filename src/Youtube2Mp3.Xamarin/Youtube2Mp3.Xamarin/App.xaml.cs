@@ -1,6 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 using Youtube2Mp3.Xamarin.Services;
 using Youtube2Mp3.Xamarin.Views;
 

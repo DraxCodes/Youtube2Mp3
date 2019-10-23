@@ -8,7 +8,6 @@ namespace Youtube2Mp3.Xamarin
 {
     public partial class App : Application
     {
-
         public App()
         {
             InitializeComponent();

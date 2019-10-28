@@ -11,6 +11,7 @@ namespace Youtube2Mp3.Xamarin
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
+            // Mainpage is a TabbedContent page (basically NavigationPage)
             MainPage = new MainPage();
         }
 

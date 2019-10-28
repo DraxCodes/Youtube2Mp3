@@ -12,7 +12,6 @@ namespace Youtube2Mp3.Xamarin.Services
 
         public MockDataStore()
         {
-            items = new List<Item>();
             var mockItems = new List<Item>
             {
                 new Item { Id = Guid.NewGuid().ToString(), Text = "First item", Description="This is an item description." },
@@ -23,10 +22,7 @@ namespace Youtube2Mp3.Xamarin.Services
                 new Item { Id = Guid.NewGuid().ToString(), Text = "Sixth item", Description="This is an item description." }
             };
 
-            foreach (var item in mockItems)
-            {
-                items.Add(item);
-            }
+            items = new List<Item>(mockItems);
         }
 
         public async Task<bool> AddItemAsync(Item item)

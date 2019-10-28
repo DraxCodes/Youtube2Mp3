@@ -10,14 +10,14 @@ using Youtube2Mp3.Xamarin.Views;
 
 namespace Youtube2Mp3.Xamarin.ViewModels
 {
-    public class ItemsViewModel : BaseViewModel
+    public class DownloadedSongsViewModel : BaseViewModel
     {
         public ObservableCollection<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
 
-        public ItemsViewModel()
+        public DownloadedSongsViewModel()
         {
-            Title = "Elle moe";
+            Title = "Your downloaded songs";
             Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
@@ -31,8 +31,7 @@ namespace Youtube2Mp3.Xamarin.ViewModels
 
         async Task ExecuteLoadItemsCommand()
         {
-            if (IsBusy)
-                return;
+            if (IsBusy) { return; }
 
             IsBusy = true;
 

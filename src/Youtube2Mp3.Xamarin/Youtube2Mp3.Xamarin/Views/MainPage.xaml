@@ -8,21 +8,22 @@
             x:Class="Youtube2Mp3.Xamarin.Views.MainPage">
 
     <TabbedPage.Children>
+        
         <NavigationPage Title="Browse Songs">
             <x:Arguments>
-                <views:ItemsPage />
+                <views:SearchSongsPage />
             </x:Arguments>
         </NavigationPage>
 
         <NavigationPage Title="Spotify Conversion">
             <x:Arguments>
-                <views:AboutPage />
+                <views:SpotifyPage />
             </x:Arguments>
         </NavigationPage>
 
         <NavigationPage Title="Downloaded Songs">
             <x:Arguments>
-                <views:AboutPage />
+                <views:DownloadedSongsPage />
             </x:Arguments>
         </NavigationPage>
 
@@ -31,5 +32,6 @@
                 <views:AboutPage />
             </x:Arguments>
         </NavigationPage>
+        
     </TabbedPage.Children>
 </TabbedPage>

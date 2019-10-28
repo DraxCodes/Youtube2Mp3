@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
 using Youtube2Mp3.Xamarin.Models;
-using Youtube2Mp3.Xamarin.Views;
 using Youtube2Mp3.Xamarin.ViewModels;
 
 namespace Youtube2Mp3.Xamarin.Views

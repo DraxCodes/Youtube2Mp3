@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using Xamarin.Forms;
-
 using Youtube2Mp3.Xamarin.Models;
 
 namespace Youtube2Mp3.Xamarin.Views

@@ -29,9 +29,9 @@ namespace Youtube2Mp3.Xamarin.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            if (viewModel.Songs.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);
+            
+            /*if (viewModel.Songs.Count == 0)
+                viewModel.LoadItemsCommand.Execute(null);*/
         }
     }
 }

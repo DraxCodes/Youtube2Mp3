@@ -1,5 +1,5 @@
 ﻿using Xamarin.Forms;
-using Youtube2Mp3.Xamarin.Models;
+using Youtube2Mp3.Core.Entities;
 
 namespace Youtube2Mp3.Xamarin.ViewModels
 {
@@ -11,11 +11,11 @@ namespace Youtube2Mp3.Xamarin.ViewModels
         }
 
         public Command DeleteCurrentItemCommand { get; }
-        public Item Item { get; set; }
-        public ItemDetailViewModel(Item item = null)
+        public Track Song { get; set; }
+        public ItemDetailViewModel(Track song = null)
         {
-            Title = item?.Text;
-            Item = item;
+            Title = song?.Title;
+            Song = song;
         }
 
         private void DeleteCurrentItem()

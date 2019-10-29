@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Youtube2Mp3.Xamarin.Models;
+using Youtube2Mp3.Core.Entities;
 using Youtube2Mp3.Xamarin.ViewModels;
 
 namespace Youtube2Mp3.Xamarin.Views
@@ -18,9 +18,9 @@ namespace Youtube2Mp3.Xamarin.Views
         
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            if (!(args.SelectedItem is Item item)) { return; }
+            if (!(args.SelectedItem is Track song)) { return; }
 
-            await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
+            await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(song)));
 
             // Manually deselect item.
             SearchResults.SelectedItem = null;
@@ -30,7 +30,7 @@ namespace Youtube2Mp3.Xamarin.Views
         {
             base.OnAppearing();
 
-            if (viewModel.Items.Count == 0)
+            if (viewModel.Songs.Count == 0)
                 viewModel.LoadItemsCommand.Execute(null);
         }
     }

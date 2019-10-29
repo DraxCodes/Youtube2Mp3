@@ -1,5 +1,4 @@
 ﻿using Xamarin.Forms;
-using Youtube2Mp3.Xamarin.Services;
 using Youtube2Mp3.Xamarin.Views;
 
 namespace Youtube2Mp3.Xamarin
@@ -10,7 +9,9 @@ namespace Youtube2Mp3.Xamarin
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
+            //DependencyService.Register<MockDataStore>();
+            //Register any Dependencies in here, like above ^^
+
             // Mainpage is a TabbedContent page (basically NavigationPage)
             MainPage = new MainPage();
         }

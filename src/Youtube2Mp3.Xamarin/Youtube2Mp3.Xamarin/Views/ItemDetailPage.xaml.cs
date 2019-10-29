@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using Xamarin.Forms;
-using Youtube2Mp3.Xamarin.Models;
+using Youtube2Mp3.Core.Entities;
 using Youtube2Mp3.Xamarin.ViewModels;
 
 namespace Youtube2Mp3.Xamarin.Views
@@ -22,11 +22,7 @@ namespace Youtube2Mp3.Xamarin.Views
         {
             InitializeComponent();
 
-            var item = new Item
-            {
-                Text = "Placeholder text",
-                Description = "If you see this, something probably went wrong."
-            };
+            var item = new Track("", new[] { "" }, 0);
 
             _viewModel = new ItemDetailViewModel(item);
             BindingContext = _viewModel;

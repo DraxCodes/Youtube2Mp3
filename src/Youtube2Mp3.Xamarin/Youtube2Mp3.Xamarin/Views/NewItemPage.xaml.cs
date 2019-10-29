@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using Xamarin.Forms;
-using Youtube2Mp3.Xamarin.Models;
+using Youtube2Mp3.Core.Entities;
 
 namespace Youtube2Mp3.Xamarin.Views
 {
@@ -10,17 +10,13 @@ namespace Youtube2Mp3.Xamarin.Views
     [DesignTimeVisible(false)]
     public partial class NewItemPage : ContentPage
     {
-        public Item Item { get; set; }
+        public Track Item { get; set; }
 
         public NewItemPage()
         {
             InitializeComponent();
 
-            Item = new Item
-            {
-                Text = "Item name",
-                Description = "This is an item description."
-            };
+            Item = new Track("", new[] { "" }, 0);
 
             BindingContext = this;
         }

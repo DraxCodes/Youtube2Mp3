@@ -6,9 +6,8 @@
             mc:Ignorable="d"
             xmlns:views="clr-namespace:Youtube2Mp3.Xamarin.Views"
             x:Class="Youtube2Mp3.Xamarin.Views.MainPage">
-
+    
     <TabbedPage.Children>
-        
         <NavigationPage Title="Browse Songs">
             <x:Arguments>
                 <views:SearchSongsPage />

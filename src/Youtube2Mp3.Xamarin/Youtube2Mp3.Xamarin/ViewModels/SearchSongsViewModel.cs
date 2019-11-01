@@ -3,12 +3,12 @@ using Xamarin.Forms;
 
 namespace Youtube2Mp3.Xamarin.ViewModels
 {
-    public class BrowseSongsViewModel : BaseViewModel
+    public class SearchSongsViewModel : BaseViewModel
     {
         public Command GetSearchResultsCommand { get; set; }
         public string UserInput { get; set; }
 
-        public BrowseSongsViewModel()
+        public SearchSongsViewModel()
         {
             GetSearchResultsCommand = new Command(async () => await GetSearchResults(UserInput), () => !IsBusy);
         }

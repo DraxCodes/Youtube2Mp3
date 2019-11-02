@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Youtube2Mp3.Core.Services;
 
 namespace Youtube2Mp3.Xamarin.ViewModels
 {

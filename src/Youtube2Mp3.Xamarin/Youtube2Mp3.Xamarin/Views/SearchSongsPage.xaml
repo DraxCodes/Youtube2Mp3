@@ -8,7 +8,10 @@
              x:Name="BrowseSongsPage">
     
     <StackLayout>
-        <Entry Placeholder="Search query" />
+        <StackLayout>
+            <Entry Placeholder="Search query" HorizontalOptions="StartAndExpand" Completed="Entry_Completed"/>
+            <ImageButton BackgroundColor="Transparent" Source="delete.png" WidthRequest="30" HeightRequest="30"/>
+        </StackLayout>
         <ListView x:Name="SearchResults"
                 ItemsSource="{Binding Items}"
                 VerticalOptions="FillAndExpand"

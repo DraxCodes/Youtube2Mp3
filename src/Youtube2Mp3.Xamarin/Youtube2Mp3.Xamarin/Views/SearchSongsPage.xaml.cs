@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Youtube2Mp3.Core.Entities;
 using Youtube2Mp3.Xamarin.ViewModels;
@@ -9,7 +8,7 @@ namespace Youtube2Mp3.Xamarin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SearchSongsPage : ContentPage
     {
-        BrowseSongsViewModel viewModel;
+        SearchSongsViewModel viewModel;
 
         public SearchSongsPage()
         {
@@ -29,9 +28,14 @@ namespace Youtube2Mp3.Xamarin.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            
-            /*if (viewModel.Songs.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);*/
+
+            if (!string.IsNullOrEmpty(viewModel.UserInput))
+            {
+                viewModel.GetSearchResultsCommand.Execute(null);
+            }
         }
+
+        private void Entry_Completed(object sender, System.EventArgs e)
+            => viewModel.GetSearchResultsCommand.Execute(null);
     }
 }

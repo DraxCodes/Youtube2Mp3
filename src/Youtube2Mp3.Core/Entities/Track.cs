@@ -16,6 +16,13 @@ namespace Youtube2Mp3.Core.Entities
             Duration = GenerateTimeSpan(durationMilliSeconds);
         }
 
+        public Track(string title, string author, int durationMilliSeconds)
+        {
+            Title = title;
+            Authors = new[] { author };
+            Duration = GenerateTimeSpan(durationMilliSeconds);
+        }
+
         private TimeSpan GenerateTimeSpan(int durationMilliSeconds)
             => TimeSpan.FromMilliseconds(durationMilliSeconds);
     }

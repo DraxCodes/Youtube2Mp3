@@ -2,7 +2,7 @@
 
 namespace Youtube2Mp3.Core.Entities
 {
-    public class YoutubeTrack : Track
+    public class YoutubeTrack : Track, ITrack
     {
         public string Id { get; private set; }
 

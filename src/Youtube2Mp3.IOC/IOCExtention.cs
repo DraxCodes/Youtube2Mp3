@@ -14,6 +14,7 @@ namespace Youtube2Mp3.IOC
         public static IServiceCollection UseYoutube(this IServiceCollection services)
             => services.AddSingleton<IStreamRepository, YoutubeStreamRepository>()
                        .AddSingleton<IDownloadService, YoutubeDownloadService>()
+                       .AddSingleton<IThumbnailRepository, YoutubeThumbnailRepository>()
                        .AddSingleton<YoutubeClient>();
     }
 }

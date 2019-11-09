@@ -26,7 +26,7 @@ namespace Youtube2Mp3.ConsoleUi.Services
 
         public async Task SearchYoutubeTest()
         {
-            var searchTrack = new Track("SuperNova", new[] { "Mr Hudson" }, 0);
+            var searchTrack = new Track("SuperNova", "Mr Hudson", 0);
             var results = await _streamRepository.SearchAsync(searchTrack);
 
             foreach (var result in results)

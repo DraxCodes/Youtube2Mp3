@@ -8,8 +8,8 @@
              Title="{Binding Title}">
 
     <StackLayout Spacing="20" Padding="15">
-        <Label Text="{Binding Item.Text}" d:Text="Item name" FontSize="Title" HorizontalOptions="EndAndExpand"/>
-        <Label Text="{Binding Item.Description}" d:Text="Item description" FontSize="Medium" HorizontalOptions="EndAndExpand"/>
+        <Label Text="{Binding Song.Title}" d:Text="Song Title" FontSize="Title" HorizontalOptions="EndAndExpand"/>
+        <Label Text="{Binding Song.Authors}" d:Text="Song Authors" FontSize="Medium" HorizontalOptions="EndAndExpand"/>
 
         <ImageButton Command="{Binding DeleteCurrentItemCommand}" Source="delete.png" Aspect="AspectFill"
                 VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand" Padding="10" 

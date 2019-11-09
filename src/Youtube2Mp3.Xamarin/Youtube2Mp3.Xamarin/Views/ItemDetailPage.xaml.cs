@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using Xamarin.Forms;
-using Youtube2Mp3.Core.Entities;
 using Youtube2Mp3.Xamarin.ViewModels;
 
 namespace Youtube2Mp3.Xamarin.Views
@@ -22,9 +21,8 @@ namespace Youtube2Mp3.Xamarin.Views
         {
             InitializeComponent();
 
-            var item = new Track("", new[] { "" }, 0);
 
-            _viewModel = new ItemDetailViewModel(item);
+            _viewModel = new ItemDetailViewModel();
             BindingContext = _viewModel;
         }
     }

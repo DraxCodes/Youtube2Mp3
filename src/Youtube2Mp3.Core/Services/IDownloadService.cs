@@ -5,7 +5,7 @@ namespace Youtube2Mp3.Core.Services
 {
     public interface IDownloadService
     {
-        Task DownloadMediaFromTrackAsync(Track track, string filePath, bool appendLyrics, bool useAuthor, bool allowFallback = true);
+        Task DownloadMediaFromTrackAsync(ITrack track, string filePath, bool appendLyrics, bool useAuthor, bool allowFallback = true);
         Task DownloadMediaFromYoutubeTrackAsync(YoutubeTrack track, string filePath);
     }
 }

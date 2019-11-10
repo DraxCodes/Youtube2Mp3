@@ -36,7 +36,7 @@ namespace Youtube2Mp3.Youtube.Services
             await stream.FlushAsync();
         }
 
-        public async Task DownloadMediaFromTrackAsync(Track track, string filePath, bool appendLyrics, bool useAuthor, bool allowFallback = true)
+        public async Task DownloadMediaFromTrackAsync(ITrack track, string filePath, bool appendLyrics, bool useAuthor, bool allowFallback = true)
         {
             EnsurePathExists(filePath);
 

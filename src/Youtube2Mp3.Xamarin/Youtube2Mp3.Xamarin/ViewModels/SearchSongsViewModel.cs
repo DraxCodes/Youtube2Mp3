@@ -17,7 +17,7 @@ namespace Youtube2Mp3.Xamarin.ViewModels
 
         public Command GetSearchResultsCommand { get; set; }
         public string UserInput { get; set; }
-        public List<Track> Songs
+        public IEnumerable<ITrack> Songs
         {
             get => GetSearchResults(UserInput).GetAwaiter().GetResult();
         }
@@ -27,7 +27,7 @@ namespace Youtube2Mp3.Xamarin.ViewModels
             GetSearchResultsCommand = new Command(async () => await GetSearchResults(UserInput), () => !IsBusy);
         }
 
-        private async Task<List<Track>> GetSearchResults(string query)
+        private async Task<IEnumerable<ITrack>> GetSearchResults(string query)
             => _streamRepository.SearchAsync(query);
     }
 }

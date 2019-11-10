@@ -84,6 +84,19 @@ namespace Youtube2Mp3.Youtube.Services
             return tracks;
         }
 
+        public async Task<IEnumerable<YoutubeTrack>> SearchAsync(string query)
+        {
+            var videos = await _client.SearchVideosAsync($"{query}", 1);
+            var tracks = new Collection<YoutubeTrack>();
+
+            foreach (var video in videos)
+            {
+                tracks.Add(ConvertTrack(video));
+            }
+
+            return tracks;
+        }
+
         private YoutubeTrack ConvertTrack(Video video)
             => new YoutubeTrack(video.Title, new[] { video.Author }, (int)video.Duration.TotalMilliseconds, video.Id);
 

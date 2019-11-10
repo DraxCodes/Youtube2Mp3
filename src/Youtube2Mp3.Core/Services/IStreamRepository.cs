@@ -10,5 +10,6 @@ namespace Youtube2Mp3.Core.Services
         Task<MemoryStream> GetStreamByTrackAsync(Track track, bool appendLyrics, bool useAuthor, bool shouldDefault);
         Task<MemoryStream> GetStreamByYoutubeTrackAsync(YoutubeTrack track);
         Task<IEnumerable<YoutubeTrack>> SearchAsync(Track track);
+        Task<IEnumerable<YoutubeTrack>> SearchAsync(string query);
     }
 }

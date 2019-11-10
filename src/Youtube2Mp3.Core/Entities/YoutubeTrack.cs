@@ -10,5 +10,10 @@ namespace Youtube2Mp3.Core.Entities
         {
             Id = id;
         }
+
+        public YoutubeTrack(string title, string authors, int durationMilliSeconds, string id) : base(title, authors, durationMilliSeconds)
+        {
+            Id = id;
+        }
     }
 }

@@ -74,31 +74,27 @@ namespace Youtube2Mp3.Youtube.Services
         public async Task<IEnumerable<YoutubeTrack>> SearchAsync(Track track)
         {
             var videos = await _client.SearchVideosAsync($"{track.Authors.FirstOrDefault()} - {track.Title}", 1);
-            var tracks = new Collection<YoutubeTrack>();
-
-            foreach (var video in videos)
-            {
-               tracks.Add(ConvertTrack(video));
-            }
-
-            return tracks;
+            return new Collection<YoutubeTrack>(ConvertTracks(videos));
         }
 
         public async Task<IEnumerable<YoutubeTrack>> SearchAsync(string query)
         {
             var videos = await _client.SearchVideosAsync($"{query}", 1);
-            var tracks = new Collection<YoutubeTrack>();
+            return new Collection<YoutubeTrack>(ConvertTracks(videos));
+        }
+
+        private IList<YoutubeTrack> ConvertTracks(IEnumerable<Video> videos)
+        {
+            var ytTracks = new List<YoutubeTrack>();
 
             foreach (var video in videos)
             {
-                tracks.Add(ConvertTrack(video));
+                var track = new YoutubeTrack(video.Title, video.Author, (int)video.Duration.TotalMilliseconds, video.Id);
+                ytTracks.Add(track);
             }
 
-            return tracks;
+            return ytTracks;
         }
-
-        private YoutubeTrack ConvertTrack(Video video)
-            => new YoutubeTrack(video.Title, new[] { video.Author }, (int)video.Duration.TotalMilliseconds, video.Id);
 
         private async Task<Video> SearchYoutubeAsync(Track track, bool shouldUseLyrics, bool shouldUseAuthor, bool shouldFallback)
         {

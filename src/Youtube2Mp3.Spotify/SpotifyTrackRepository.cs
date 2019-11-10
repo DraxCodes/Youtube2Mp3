@@ -28,14 +28,14 @@ namespace Youtube2Mp3.Spotify
             _auth.ClientSecret = clientSecret;
         }
 
-        public async Task<IEnumerable<Track>> LoadPlaylistAsync(string url)
+        public async Task<IEnumerable<ITrack>> LoadPlaylistAsync(string url)
         {
             if (_webApi == null) { _webApi = await InitializeWebApi(); }
 
             try
             {
                 var playlist = _webApi.GetPlaylistByUrl(url);
-                var result = new List<Track>();
+                var result = new List<ITrack>();
 
                 if (playlist is null) { return result; }
 

@@ -5,7 +5,7 @@ namespace Youtube2Mp3.Core.Extensions
 {
     public static class TrackFormatExtensions
     {
-        public static string QueryFormat(this Track track, bool shouldUseAuthor, bool shouldUseLyrics)
+        public static string QueryFormat(this ITrack track, bool shouldUseAuthor, bool shouldUseLyrics)
         {
             if (shouldUseAuthor && !shouldUseLyrics) { return $"{track.Authors.First()} - {track.Title}"; }
             if (shouldUseLyrics && !shouldUseAuthor) { return $"{track.Title} lyrics"; }
@@ -13,7 +13,7 @@ namespace Youtube2Mp3.Core.Extensions
             return track.Title;
         }
 
-        public static string FormatSafeTrackName(this Track track)
+        public static string FormatSafeTrackName(this ITrack track)
         {
             var author = track.Authors.FirstOrDefault();
 

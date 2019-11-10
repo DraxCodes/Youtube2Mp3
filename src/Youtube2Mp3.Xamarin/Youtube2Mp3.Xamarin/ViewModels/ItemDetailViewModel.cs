@@ -1,22 +1,32 @@
 ﻿using Xamarin.Forms;
 using Youtube2Mp3.Core.Entities;
+using Youtube2Mp3.Core.Services;
 
 namespace Youtube2Mp3.Xamarin.ViewModels
 {
     public class ItemDetailViewModel : BaseViewModel
     {
-        public ItemDetailViewModel()
+        private IThumbnailRepository _thumbnailRepository;
+
+        public ItemDetailViewModel(Track song = null)
         {
             DeleteCurrentItemCommand = new Command(DeleteCurrentItem, () => !IsBusy);
+
+            Title = song?.Title;
+            Song = song;
+            SongThumbnailUrl = _thumbnailRepository.DownloadThumbnailAndGetFilePathAsync(song).GetAwaiter().GetResult();
         }
 
         public Command DeleteCurrentItemCommand { get; }
         public Track Song { get; set; }
-        public ItemDetailViewModel(Track song = null)
+        public string Artists
         {
-            Title = song?.Title;
-            Song = song;
+            get
+            {
+                return string.Join(", ", Song.Authors);
+            }
         }
+        public string SongThumbnailUrl { get; set; } = "default_thumbnail.png";
 
         private void DeleteCurrentItem()
         {

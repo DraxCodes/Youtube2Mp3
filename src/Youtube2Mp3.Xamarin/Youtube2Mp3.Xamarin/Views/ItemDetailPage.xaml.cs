@@ -21,7 +21,6 @@ namespace Youtube2Mp3.Xamarin.Views
         {
             InitializeComponent();
 
-
             _viewModel = new ItemDetailViewModel();
             BindingContext = _viewModel;
         }

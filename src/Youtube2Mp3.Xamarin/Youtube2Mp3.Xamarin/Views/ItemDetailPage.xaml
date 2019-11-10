@@ -7,12 +7,18 @@
              x:Class="Youtube2Mp3.Xamarin.Views.ItemDetailPage"
              Title="{Binding Title}">
 
-    <StackLayout Spacing="20" Padding="15">
-        <Label Text="{Binding Song.Title}" d:Text="Song Title" FontSize="Title" HorizontalOptions="EndAndExpand"/>
-        <Label Text="{Binding Song.Authors}" d:Text="Song Authors" FontSize="Medium" HorizontalOptions="EndAndExpand"/>
+    <StackLayout Spacing="20" Padding="25">
+        <Image d:Source="default_thumbnail.png" Source="{Binding SongThumbnailUrl}" />
+
+        <StackLayout BackgroundColor="Red" HorizontalOptions="StartAndExpand">
+            <Label Text="{Binding Song.Title}" d:Text="Song Title"
+               FontSize="Title"/>
+            <Label Text="{Binding Song.Authors}" d:Text="Song Authors"
+               FontSize="Medium"/>
+        </StackLayout>
 
         <ImageButton Command="{Binding DeleteCurrentItemCommand}" Source="delete.png" Aspect="AspectFill"
-                VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand" Padding="10" 
-                WidthRequest="60" HeightRequest="60" BackgroundColor="Red" CornerRadius="30"/>
+                     VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand" Padding="10" 
+                     WidthRequest="60" HeightRequest="60" BackgroundColor="Red" CornerRadius="30"/>
     </StackLayout>
 </ContentPage>

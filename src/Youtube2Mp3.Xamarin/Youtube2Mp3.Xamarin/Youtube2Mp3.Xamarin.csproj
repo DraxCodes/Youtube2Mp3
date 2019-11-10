@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Youtube2Mp3.Core\Youtube2Mp3.Core.csproj" />
+    <ProjectReference Include="..\..\Youtube2Mp3.IOC\Youtube2Mp3.IOC.csproj" />
   </ItemGroup>
 
   <ItemGroup>

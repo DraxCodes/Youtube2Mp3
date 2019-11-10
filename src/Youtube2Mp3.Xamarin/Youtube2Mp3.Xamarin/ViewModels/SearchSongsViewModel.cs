@@ -28,6 +28,6 @@ namespace Youtube2Mp3.Xamarin.ViewModels
         }
 
         private async Task<IEnumerable<ITrack>> GetSearchResults(string query)
-            => _streamRepository.SearchAsync(query);
+            => await _streamRepository.SearchAsync(query);
     }
 }

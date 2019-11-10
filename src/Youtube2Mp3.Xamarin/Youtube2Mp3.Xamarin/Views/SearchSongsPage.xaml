@@ -9,7 +9,7 @@
     
     <StackLayout>
         <StackLayout>
-            <Entry Placeholder="Search query" HorizontalOptions="StartAndExpand" Completed="Entry_Completed"/>
+            <Entry Placeholder="Search query" HorizontalOptions="StartAndExpand" ReturnCommand="{Binding GetSearchResultsCommand}"/>
             <ImageButton BackgroundColor="Transparent" Source="delete.png" WidthRequest="30" HeightRequest="30"/>
         </StackLayout>
         <ListView x:Name="SearchResults"

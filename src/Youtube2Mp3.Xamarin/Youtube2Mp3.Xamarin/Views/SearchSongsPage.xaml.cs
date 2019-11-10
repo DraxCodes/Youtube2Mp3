@@ -8,8 +8,6 @@ namespace Youtube2Mp3.Xamarin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SearchSongsPage : ContentPage
     {
-        SearchSongsViewModel viewModel;
-
         public SearchSongsPage()
         {
             InitializeComponent();
@@ -28,14 +26,6 @@ namespace Youtube2Mp3.Xamarin.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            if (!string.IsNullOrEmpty(viewModel.UserInput))
-            {
-                viewModel.GetSearchResultsCommand.Execute(null);
-            }
         }
-
-        private void Entry_Completed(object sender, System.EventArgs e)
-            => viewModel.GetSearchResultsCommand.Execute(null);
     }
 }

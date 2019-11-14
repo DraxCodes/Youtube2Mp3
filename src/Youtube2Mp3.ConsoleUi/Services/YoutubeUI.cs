@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,6 +34,16 @@ namespace Youtube2Mp3.ConsoleUi.Services
             {
                 Console.WriteLine($"{result.Authors.First()} - {result.Title} :: {result.Duration.ToString(@"mm\:ss")}");
             }
+        }
+
+        public async Task DownloadSpecificTrackById()
+        {
+            Console.WriteLine("Please enter an ID");
+            var id = Console.ReadLine();
+
+            var searchTrack = new YoutubeTrack("", new List<string>(), 0, id);
+
+            await _downloadService.DownloadMediaFromYoutubeTrackAsync(searchTrack, "Test");
         }
 
         public async Task YoutubeSearchAndDownloadTest()
@@ -74,10 +85,10 @@ namespace Youtube2Mp3.ConsoleUi.Services
             Console.WriteLine($"Download: {selectedTrack.Title} Completed.");
         }
 
-        public async Task SpotifyPlaylistYoutubeDownloadTest()
+        public async Task SpotifyPlaylistYoutubeDownloadTest(string url)
         {
             Console.WriteLine("Attempting....");
-            var tracks = await _trackRespository.LoadPlaylistAsync("https://open.spotify.com/playlist/0apX36HEcBc4qRsPoZcdRQ");
+            var tracks = await _trackRespository.LoadPlaylistAsync(url);
             var tracksToDl = tracks.OrderBy(t => t.Title);
             var timer = new Stopwatch();
 

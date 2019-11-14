@@ -19,10 +19,7 @@ namespace Youtube2Mp3.ConsoleUi.Services
             _trackRespository = trackRespository;
             _downloadService = downloadService;
             _streamRepository = streamRepository;
-            _trackRespository.InitializeSpotifyAuth(
-                Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_ID"),
-                Environment.GetEnvironmentVariable("SPOTIFY_CLIENT_SECRET")
-            );
+            _trackRespository.InitializeSpotifyAuth("", "");
         }
 
         public async Task SearchYoutubeTest()

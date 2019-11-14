@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Youtube2Mp3.Core.Entities
 {
-    public class Track
+    public class Track : ITrack
     {
         public string Title { get; set; }
         public IEnumerable<string> Authors { get; private set; }
@@ -13,6 +13,13 @@ namespace Youtube2Mp3.Core.Entities
         {
             Title = title;
             Authors = authors;
+            Duration = GenerateTimeSpan(durationMilliSeconds);
+        }
+
+        public Track(string title, string author, int durationMilliSeconds)
+        {
+            Title = title;
+            Authors = new[] { author };
             Duration = GenerateTimeSpan(durationMilliSeconds);
         }
 

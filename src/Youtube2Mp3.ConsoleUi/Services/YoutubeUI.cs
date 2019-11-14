@@ -24,7 +24,7 @@ namespace Youtube2Mp3.ConsoleUi.Services
 
         public async Task SearchYoutubeTest()
         {
-            var searchTrack = new Track("SuperNova", new[] { "Mr Hudson" }, 0);
+            var searchTrack = new Track("SuperNova", "Mr Hudson", 0);
             var results = await _streamRepository.SearchAsync(searchTrack);
 
             foreach (var result in results)
@@ -57,7 +57,7 @@ namespace Youtube2Mp3.ConsoleUi.Services
             var searchTrack = new Track(title, new[] { author }, 0);
 
             //Search the stream repo for the tracks assocaited with the users query (Essentially searching youtube)
-            var ytTracks = await _streamRepository.SearchAsync(searchTrack);
+            var ytTracks = await _streamRepository.SearchAsync(searchTrack) as IEnumerable<YoutubeTrack>;
 
             //Display results (At this point you have YoutubeTrack entities which have an ID associated with them)
             foreach (var track in ytTracks)
